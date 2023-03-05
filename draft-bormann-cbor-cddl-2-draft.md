@@ -13,7 +13,7 @@ stream: IETF
 wg: CBOR Working group
 
 venue:
-  mail: cbor@ietf.org
+  mail: "cbor@ietf.org"
 
 pi: [toc, sortrefs, symrefs, compact, comments]
 
