@@ -4,8 +4,8 @@ v: 3
 title: >
   CDDL 2.0 — a draft plan
 abbrev: CDDL 2.0
-docname: draft-bormann-cbor-cddl-2-draft-00
-date: 2022-10-19
+docname: draft-bormann-cbor-cddl-2-draft-latest
+# date: 2022-10-19
 
 keyword: Internet-Draft
 cat: info
