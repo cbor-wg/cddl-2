@@ -1,0 +1,18 @@
+~~~
+::: cddlc -2tcddl -
+mydata = {* label => values}
+;# include label, values from rfc9052
+:::
+~~~
+::: check
+mydata = {* label => values}
+label = int / tstr
+values = any
+:::
+
+Only exactly the rules mentioned are included:
+
+~~~ cddl
+::: output
+:::
+~~~

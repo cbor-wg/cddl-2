@@ -14,6 +14,7 @@ wg: CBOR Working group
 
 venue:
   mail: "cbor@ietf.org"
+  github: cbor-wg/cddl-2
 
 pi: [toc, sortrefs, symrefs, compact, comments]
 
@@ -103,6 +104,42 @@ features in parallel to the work described here.
 Mending syntax deficits
 ======================
 
+Empty data models {#empty}
+-----------------
+
+{:compact}
+*Proposal Status*:
+: complete
+
+*Compatibility*:
+: backward (not forward)
+
+{{-cddl}} requires a CDDL file to have at least one rule.
+
+
+~~~ abnf
+     cddl = S 1*(rule S)
+~~~
+
+
+This makes sense when the file has to stand alone, as it needs to have
+at least one rule to provide an entry point (start rule).
+
+With CDDL 2.0, CDDL files can also include directives (see {{directives}}), and these might
+be the source of all the rules that ultimately make up the module created
+by the file.  The rule content has to be available for directive
+processing, making the requirement for at least one rule cumbersome.
+
+Therefore, we extend the grammar as follows:
+
+~~~ abnf
+     cddl = S *(rule S)
+~~~
+
+and make the existence of at least one rule a semantic constraint, to
+be fulfilled after processing of all directives.
+
+
 Non-literal Tag Numbers {#tagnum}
 -----------------------
 
@@ -147,40 +184,10 @@ rule name (`id`), while it occurs after `.` here.
 above example deliberately uses generics as well.)
 
 
-Tag-oriented Literals
+Tag-oriented Literals {#tagolit-ref}
 ---------------------
 
-{:compact}
-*Proposal Status*:
-: rough idea, porting from EDN
-
-*Compatibility*:
-: backward (not forward)
-
-Some CBOR tags often would be most natural to use in a CDDL spec with a literal
-syntax that is tailored to their semantics instead of their
-serialization in CBOR.  There is currently no way to add such syntaxes, no
-defined extension point either.
-
-The proposal
-"Application-Oriented Literals in CBOR Extended Diagnostic Notation"
-{{?I-D.bormann-cbor-edn-literals}} defines application-oriented
-literals, e.g., of the form
-
-> dt'2019-07-21T19:53Z'
-
-for datetime items.  With additional considerations for unambiguous
-syntax, a similar literal form could be included in CDDL.
-
-This proposal opens a name space for the prefix that indicates an
-application specific literal.
-A registry could be provided to make this name space a genuine
-extension point.
-(This is currently the production `bsqual` in {{Appendix B of RFC8610}}.)
-
-The syntax provided in {{?I-D.bormann-cbor-edn-literals}} does not
-enable the use of CDDL types — it has the same flaw that is being
-fixed for tag numbers in {{tagnum}}.
+Incomplete, see {{tagolit}}.
 
 Clarifications
 --------------
@@ -299,7 +306,7 @@ foo = h'
 
 ... which would be supported by the existing ABNF in {{-cddl}}.
 
-Processing model
+Processing model: Beyond Validation
 ================
 
 {:compact}
@@ -353,7 +360,7 @@ Module superstructure
 
 {:compact}
 *Proposal Status*:
-: collection of rough ideas with examples
+: collection of rough ideas with examples; initial subset implemented
 
 *Compatibility*:
 : bidirectional (both backward and forward)
@@ -373,10 +380,10 @@ becomes more pressing.
 The knowledge which CDDL snippets need to be concatenated in order to
 obtain the desired data model lives entirely outside the CDDL snippets
 in CDDL 1.0.
-In CDDL 2.0, rules could be packaged as modules and referenced from other
+In CDDL 2.0, rules will be packaged as modules and referenced from other
 modules.
 
-There could be some control of namespace pollution, as well as
+There needs to be some control of namespace pollution, as well as
 unambiguous referencing into evolving specifications ("versioning")
 and selection of alternatives (as was emulated with snippets in
 {{Section 11 of ?RFC8428}}, although an alternative approach for expressing
@@ -391,8 +398,9 @@ implementations is to add a super-syntax (similar to the way pragmas
 are often added to a language), e.g., by carrying them in what is
 parsed as comments in CDDL 1.0.
 
-each module to be valid CDDL (if
+This enables each module source file to be valid CDDL 1.0 (if
 missing some rule definitions to be imported).
+
 
 Namespacing
 -----------
@@ -404,7 +412,184 @@ used in RDF or Curies.  Internal names might look similar to XML
 QNames.  Note that the identifier character set for CDDL deliberately
 includes $ and @, which could be used in such a convention.
 
+Note that this convention should not pollute the actual contents of
+the model, where adding a simple prefix to rule names defined
+elsewhere may be all that is needed.
+
 Cross-universe references
+-------------------------
+
+See {{cross}}.
+
+The "module", "directives"
+------------
+
+A single CDDL file becomes a *module* by processing the (zero or more)
+*directives* in it.
+
+The semantics of the module are independent of the module(s) using it,
+however, using a module may involve transforming its rule names into a
+new namespace.
+
+Directives look like comments in CDDL 1.0, so they do not interfere
+with forward compatibility.
+
+Lines starting with the prefix `;#` are parsed as directives in CDDL
+2.0.
+
+Finding modules
+---------------
+
+For now, we assume that module names are filenames taken from one of
+several sources available to the CDDL 2.0 processor via the environment.
+This avoids the need to nail down pathnames or partial URIs into the
+CDDL files.
+
+In the CDDL 2.0 Tool described in {{cddlc-tool}}, the set of sourced is
+determined from an environment value, `CDDL_INCLUDE_PATH`, which is
+modeled after usual command-line search paths.
+It is a colon-separated list of pathnames to directories, with one
+special feature: an empty element points to he tool's own collection.
+In the current version, this collection contains 20 fragments of
+extracted CDDL from published RFCs, using names such as `rfc9052`.
+
+(Future versions might augment this with Web extractors and/or ways to
+extract CDDL modules from github and from Internet-Drafts.)
+
+The default `CDDL_INCLUDE_PATH` is  `.:` — i.e., files are found in the current directory and, if not found there, cddlc’s collection.
+
+Initial Set of Directives {#directives}
+-------------------------
+
+Two groups of directives are defined at this point:
+
+* `include`, which includes all the rules from a module (which
+  includes the ones imported/included there, transitively), or
+  specific explicitly selected rules
+
+* `import`, which includes only those rules from the module that are
+   referenced, implicitly or explicitly (see below), including the
+   rules that are referenced from these rules, transitively.
+
+The `include` function is more useful for composing a single model
+from parts controlled by one author, while the `import` function is
+more about treating a module as a library:
+
+{::include code/simple-import.md}
+
+This is appropriate for using libraries that are well known to the
+imported.
+However, if it is not acceptable that the library can pollute the
+namespace of the importing module, the import directive can specify a
+namespace prefix:
+
+{::include code/namespaced-import.md}
+
+Note how the imported names are prefixed with `cose.` as specified in
+the import directive, but CDDL prelude ({{Appendix D of -cddl}}) names such as `tstr` and `any` are not.
+
+Explicit selection of names
+---------------------------
+
+Both `import` and `include` directives can be augmented by an explicit
+mentioning of rule names.
+
+Starting with `include`:
+
+{::include code/includefrom.md}
+
+The module from which rules are explicitly imported can be namespaced:
+
+{::include code/includefrom-namespaced.md}
+
+Both examples would work exactly the same with `import`, as the
+included rules do not reference anything else from the included
+module.
+
+An import however also draws in the transitive closure of the rules
+referenced:
+
+{::include code/importfrom-namespaced.md}
+
+The `import` statement can also request an alias for an imported name:
+
+{::include code/importfrom-renamed.md}
+
+Tool Support for Command-Line Control
+------------------
+
+{::include code/zero.md}
+
+In other words, the module had an empty CDDL file, which therefore was
+not provided (no `–` on the command line).
+
+ABNF is a lot like CDDL
+------------------------
+
+Many of the constructs defined here for CDDL also could be used with
+ABNF specifications.  ABNF would definitely benefit from a standard
+way to import snippets from existing RFCs.
+Since CDDL contains ABNF support ({{Section 3 of RFC9165}}), it would be
+natural to make some of the functionality discussed in this section
+available for ABNF as well.
+
+IANA Considerations
+==================
+
+(Insert new registry for application specific literals here, if adopted.)
+
+
+Security considerations
+=======================
+
+The security considerations of {{-cddl}} apply.
+
+--- back
+
+Fridge
+======
+
+This appendix contains sections that may not make it to a 2.0, but
+might be part of a followup.
+
+
+Tag-oriented Literals {#tagolit}
+---------------------
+
+{:compact}
+*Proposal Status*:
+: rough idea, porting from EDN
+
+*Compatibility*:
+: backward (not forward)
+
+Some CBOR tags often would be most natural to use in a CDDL spec with a literal
+syntax that is tailored to their semantics instead of their
+serialization in CBOR.  There is currently no way to add such syntaxes, no
+defined extension point either.
+
+The proposal
+"Application-Oriented Literals in CBOR Extended Diagnostic Notation"
+{{?I-D.bormann-cbor-edn-literals}} defines application-oriented
+literals, e.g., of the form
+
+> dt'2019-07-21T19:53Z'
+
+for datetime items.  With additional considerations for unambiguous
+syntax, a similar literal form could be included in CDDL.
+
+This proposal opens a name space for the prefix that indicates an
+application specific literal.
+A registry could be provided to make this name space a genuine
+extension point.
+(This is currently the production `bsqual` in {{Appendix B of RFC8610}}.)
+
+The syntax provided in {{?I-D.bormann-cbor-edn-literals}} does not
+enable the use of CDDL types — it has the same flaw that is being
+fixed for tag numbers in {{tagnum}}.
+
+
+Cross-universe references {#cross}
 -------------------------
 
 Often, a CDDL specification needs to import from specifications in a
@@ -439,145 +624,26 @@ Additional functionality may be needed for filtering with respect to other
 columns of the registry record, e.g., `<capabilities>` in the case of
 this example.
 
-Potential examples
-------------------
+A CDDL 2.0 Tool {#cddlc-tool}
+===============
 
-This section shows some examples that illustrate potential syntaxes
-and semantics to be examined.
+This appendix is for information only.
 
-One of the potential objectives here is to keep documents that make
-use of this extension generally valid as CDDL 1.0 documents, albeit
-possibly with a need to add further CDDL 1.0 rules to obtain a
-complete specification.
+A rough CDDL 2.0 tool is available {{cddlc}}.  It can process CDDL 2.0
+models into CDDL 1.0 models that can then be processed by the CDDL
+tool described in {{Appendix F of -cddl}}.
 
-### How name spaces might look like
-
-Implicit namespacing might be provided by using a document reference
-as a namespace tag:
+A typical command line involving both tools might be:
 
 ~~~
-RFC8610.int ⬌ int
-RFC9090.oid ⬌ oid
+cddlc -2 -tcddl mytestfile.cddl | cddl - gp 10
 ~~~
 
-Note that this example establishes a namespace for the prelude
-(`RFC8610.int`); maybe it is worth to do that more explicitly.
+Install on a system with a modern Ruby (Ruby version ≥ 3.0) via:
 
-### Explicitly interacting with namespaces
+    gem install cddlc
 
-New syntax for explicitly interacting with namespaces might be but
-into RFC 8610 comments, with a specific prefix (and possibly starting
-left-aligned).  Prefixes proposed include `;;<` and `;#`; the below
-will use `;#` even though that probably could pose too many conflicts;
-it also might be too inconspicuous.
-
-
-~~~
-;# export oid, roid, pen as RFC9090
-oid = #6.111(bstr)
-roid = #6.110(bstr)
-pen = #6.112(bstr)
-
-~~~
-
-Besides an implicit import such as
-
-~~~
-; unadorned, just import?
-a = [RFC9090.oid]
-~~~
-
-there also could be an explicit import syntax:
-
-~~~
-;# import oid from RFC9090
-a = [oid]
-~~~
-
-Such an explicit syntax might also be able to provide additional
-parameters such as in the IANA examples above.
-
-### Document references
-
-A convention for establishing RFC references might be easy to
-establish, but at least Internet-Draft references and IANA registry
-references should also supported.
-It is probably worth to add some indirection here, as names of
-Internet-Drafts might change (including by becoming RFCs).
-
-~~~
-;# include draft-ietf-cbor-time-tag-02.txt as time-tag
-event-start = time-tag.etime
-~~~
-
-
-### Add retroactive exporting to RFCs
-
-Existing RFCs with CDDL in them could presume an `export ...all... as RFCnnnn`
-(Possibly also per-section exports as in `RFC8610.D` for the prelude?)
-
-Namespace tags for those exports need to be reserved so they cannot be
-occupied by explicit exporting.
-
-New specifications (including RFCs) can "include"/"import" from these
-namespaces, and maybe "export" their own rules in a more considered way.
-
-### Operations
-
-* "export":
-  1. prefix: add a namespace name to "local" rulenames:
-
-     ~~~
-     `oid` ➔ `RFC9090.oid`
-     ~~~
-  2. make that namespace available to other specs
-
-* "import": include (prefixed) definitions from a source
-    1. use as is: `RFC9090.oid`
-    2. unprefix: `oid`
-
-  Example: prelude processing — include+unprefix from Appendix D of RFC8610.
-
-* "include": find files, turn into namespaces to import from
-
-### To be discussed
-
-How to find the document that exports a namespace
-(IANA? Use by other SDOs?  Internal use in an org?
-How to transition between these states?)
-
-Multiple documents exporting into one namespace
-(*Immutable* RFC9090 namespace vs. "OID"-namespace?
-Who manages *mutable* namespaces?)
-
-Updates, revisions, versions, semver:
-
-~~~
-;# insert OID ~> 2.2   ; twiddle-wakka: this version or higher
-~~~
-
-ABNF is a lot like CDDL
-------------------------
-
-Many of the constructs defined here for CDDL also could be used with
-ABNF specifications.  ABNF would definitely benefit from a standard
-way to import snippets from existing RFCs.
-Since CDDL contains ABNF support ({{Section 3 of RFC9165}}), it would be
-natural to make some of the functionality discussed in this section
-available for ABNF as well.
-
-IANA Considerations
-==================
-
-(Insert new registry for application specific literals here.)
-
-
-Security considerations
-=======================
-
-The security considerations of {{-cddl}} apply.
-
---- back
+The present document assumes the use of `cddlc` version 0.1.5.
 
 Acknowledgements
 ================
