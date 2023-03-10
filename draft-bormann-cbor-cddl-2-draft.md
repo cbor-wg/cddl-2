@@ -35,13 +35,14 @@ normative:
   RFC9165: control1
 
 informative:
-  RFC5234: abnf
-  RFC7405: abnf-case
-  RFC9090: oid
+  I-D.bormann-cbor-cddl-freezer: freezer
+  I-D.bormann-cbor-edn-literals: edn-literals
+  I-D.bormann-cbor-update-8610-grammar: grammar
+  I-D.bormann-cbor-cddl-more-control: more-controls
+  I-D.bormann-cbor-cddl-modules: modules
   useful:
     target: https://github.com/cbor-wg/cddl/wiki/Useful-CDDL
     title: Useful CDDL
-  I-D.draft-bormann-cbor-cddl-freezer: freezer
   cddlc:
     title: CDDL conversion utilities
     target: https://github.com/cabo/cddlc
@@ -206,7 +207,7 @@ defined extension point either.
 
 The proposal
 "Application-Oriented Literals in CBOR Extended Diagnostic Notation"
-{{?I-D.bormann-cbor-edn-literals}} defines application-oriented
+{{-edn-literals}} defines application-oriented
 literals, e.g., of the form
 
 > dt'2019-07-21T19:53Z'
@@ -220,9 +221,9 @@ A registry could be provided to make this name space a genuine
 extension point.
 (This is currently the production `bsqual` in {{Appendix B of RFC8610}}.)
 
-The syntax provided in {{?I-D.bormann-cbor-edn-literals}} does not
+The syntax provided in {{-edn-literals}} does not
 enable the use of CDDL types — it has the same flaw that is being
-fixed for tag numbers in {{tagnum}}.
+fixed for tag numbers in {{Section 3.2 of -grammar}}.
 
 
 Cross-universe references {#cross}
