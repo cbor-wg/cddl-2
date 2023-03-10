@@ -45,24 +45,6 @@ informative:
   cddlc:
     title: CDDL conversion utilities
     target: https://github.com/cabo/cddlc
-  Err6526:
-    target: "https://www.rfc-editor.org/errata/eid6526"
-    title: Errata Report 6526
-    seriesinfo:
-      RFC: 8610
-    date: false
-  Err6527:
-    target: "https://www.rfc-editor.org/errata/eid6527"
-    title: Errata Report 6527
-    seriesinfo:
-      RFC: 8610
-    date: false
-  Err6543:
-    target: "https://www.rfc-editor.org/errata/eid6543"
-    title: Errata Report 6543
-    seriesinfo:
-      RFC: 8610
-    date: false
   PSVI:
     target: https://www.w3.org/XML/2002/05/psvi-use-cases
     date: 2002-06-24
@@ -100,211 +82,19 @@ Introduction        {#intro}
 
 Note that the existing extension point can be exercised for new
 features in parallel to the work described here.
+One such draft, {{-more-controls}}, is planned to form the first set of
+specifications going forward from the CDDL-2 project together with {{-grammar}}.
 
-Mending syntax deficits
+Mending syntax deficits {#syntax}
 ======================
 
-Empty data models {#empty}
------------------
-
-{:compact}
-*Proposal Status*:
-: complete
-
-*Compatibility*:
-: backward (not forward)
-
-{{-cddl}} requires a CDDL file to have at least one rule.
-
-
-~~~ abnf
-     cddl = S 1*(rule S)
-~~~
-
-
-This makes sense when the file has to stand alone, as it needs to have
-at least one rule to provide an entry point (start rule).
-
-With CDDL 2.0, CDDL files can also include directives (see {{directives}}), and these might
-be the source of all the rules that ultimately make up the module created
-by the file.  The rule content has to be available for directive
-processing, making the requirement for at least one rule cumbersome.
-
-Therefore, we extend the grammar as follows:
-
-~~~ abnf
-     cddl = S *(rule S)
-~~~
-
-and make the existence of at least one rule a semantic constraint, to
-be fulfilled after processing of all directives.
-
-
-Non-literal Tag Numbers {#tagnum}
------------------------
-
-{:compact}
-*Proposal Status*:
-: complete
-
-*Compatibility*:
-: backward (not forward)
-
-The CDDL 1.0 syntax for expressing tags in CDDL is (ABNF as in {{-abnf}}):
-
-~~~ abnf
-type2 /= "#" "6" ["." uint] "(" S type S ")"
-~~~
-
-This means tag numbers can only be given as literal numbers (uints).
-Some specifications operate on ranges of tag numbers, e.g., {{?RFC9277}}
-has a range of tag numbers 1668546817 (0x63740101) to 1668612095
-(0x6374FFFF) to tag specific content formats.
-This can currently not be expressed in CDDL.
-
-CDDL 2.0 extends this to
-
-~~~ abnf
-type2 /= "#" "6" ["." tag-number] "(" S type S ")"
-tag-number = uint / ("<" type ">")
-~~~
-
-So the above range can be expressed in a CDDL fragment such as:
-
-~~~ cddl
-ct-tag<content> = #6.<ct-tag-number>(content)
-ct-tag-number = 1668546817..1668612095
-; or use 0x63740101..0x6374FFFF
-~~~
-
-Note that reuses the angle bracket syntax for generics; this reuse is
-innocuous as a generic parameter/argument only ever occurs after a
-rule name (`id`), while it occurs after `.` here.
-(Whether there is potential for human confusion can be debated; the
-above example deliberately uses generics as well.)
-
+The previous content of this section formed the basis for {{-grammar}},
+except for {{tagolit-ref}}.
 
 Tag-oriented Literals {#tagolit-ref}
 ---------------------
 
 Incomplete, see {{tagolit}}.
-
-Clarifications
---------------
-
-
-{:compact}
-*Proposal Status*:
-: complete
-
-*Compatibility*:
-: errata fix (targets 1.0 and 2.0)
-
-A number of errata reports have been made around some details of text
-string and byte string literal syntax: {{Err6527}} and {{Err6543}}.
-These need to be addressed by re-examining the details of these
-literal syntaxes.
-Also, {{Err6526}} needs to be applied (missing backslashes in text
-explaining backslash escaping).
-
-### Err6527
-
-The ABNF used in {{RFC8610}} for the content of text string literals
-is rather permissive:
-
-~~~ abnf
-text = %x22 *SCHAR %x22
-SCHAR = %x20-21 / %x23-5B / %x5D-7E / %x80-10FFFD / SESC
-SESC = "\" (%x20-7E / %x80-10FFFD)
-~~~
-
-This allows almost any non-C0 character to be escaped by a backslash,
-but critically misses out on the `\uXXXX` and `\uHHHH\uLLLL` forms
-that JSON allows to specify characters in hex.  Both can be solved by
-updating the SESC production to:
-
-~~~ abnf
-SESC = "\" ( %x22 / "/" / "\" /                 ; \" \/ \\
-             %x62 / %x66 / %x6E / %x72 / %x74 / ; \b \f \n \r \t
-             (%x75 hexchar) )                   ; \u
-hexchar = non-surrogate / (high-surrogate "\" %x75 low-surrogate)
-non-surrogate = ((DIGIT / "A"/"B"/"C" / "E"/"F") 3HEXDIG) /
-               ("D" %x30-37 2HEXDIG )
-high-surrogate = "D" ("8"/"9"/"A"/"B") 2HEXDIG
-low-surrogate = "D" ("C"/"D"/"E"/"F") 2HEXDIG
-~~~
-
-Now that SESC is more restrictively formulated, this also requires an
-update to the BCHAR production used in the ABNF syntax for byte string
-literals:
-
-~~~ abnf
-bytes = [bsqual] %x27 *BCHAR %x27
-BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
-bsqual = "h" / "b64"
-~~~
-
-The updated version explicit allows `\'`, which is no longer allowed
-in the updated SESC:
-
-~~~ abnf
-BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / "\'" / CRLF
-~~~
-
-### Err6543
-
-The ABNF used in {{RFC8610}} for the content of byte string literals
-lumps together byte strings notated as text with byte strings notated
-in base16 (hex) or base64 (but see also updated BCHAR production above):
-
-~~~ abnf
-bytes = [bsqual] %x27 *BCHAR %x27
-BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
-~~~
-
-Errata report 6543 proposes to handle the two cases in separate
-productions (where, with an updated SESC, BCHAR obviously needs to be
-updated as above):
-
-~~~ abnf
-bytes = %x27 *BCHAR %x27
-      / bsqual %x27 *QCHAR %x27
-BCHAR = %x20-26 / %x28-5B / %x5D-10FFFD / SESC / CRLF
-QCHAR = DIGIT / ALPHA / "+" / "/" / "-" / "_" / "=" / WS
-~~~~
-
-This potentially causes a subtle change, which is hidden in the WS production:
-
-~~~ abnf
-WS = SP / NL
-SP = %x20
-NL = COMMENT / CRLF
-COMMENT = ";" *PCHAR CRLF
-PCHAR = %x20-7E / %x80-10FFFD
-CRLF = %x0A / %x0D.0A
-~~~
-
-This allows any non-C0 character in a comment, so this fragment
-becomes possible:
-
-~~~ cddl
-foo = h'
-   43424F52 ; 'CBOR'
-   0A       ; LF, but don't use CR!
-'
-~~~
-
-The current text is not unambiguously saying whether the three apostrophes
-need to be escaped with a `\` or not, as in:
-
-~~~ cddl
-foo = h'
-   43424F52 ; \'CBOR\'
-   0A       ; LF, but don\'t use CR!
-'
-~~~
-
-... which would be supported by the existing ABNF in {{-cddl}}.
 
 Processing model: Beyond Validation
 ================
