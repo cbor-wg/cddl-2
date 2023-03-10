@@ -148,170 +148,16 @@ good approaches.
 Module superstructure
 =====================
 
-{:compact}
-*Proposal Status*:
-: collection of rough ideas with examples; initial subset implemented
-
-*Compatibility*:
-: bidirectional (both backward and forward)
-
-Originally, CDDL was used for small data models that could be
-expressed in a few lines.  As the size of data models that need to be
-expressed in CDDL has increased, the need to modularize and re-use
-components is increasing.
-
-CDDL 1.0 has been designed with a crude form of composition:
-Concatenating a number of CDDL snippets creates a valid CDDL data
-model unless there is a name collision (identical redefinition is
-allowed to facilitate this approach).
-With larger models, managing the name space to avoid collisions
-becomes more pressing.
-
-The knowledge which CDDL snippets need to be concatenated in order to
-obtain the desired data model lives entirely outside the CDDL snippets
-in CDDL 1.0.
-In CDDL 2.0, rules will be packaged as modules and referenced from other
-modules.
-
-There needs to be some control of namespace pollution, as well as
-unambiguous referencing into evolving specifications ("versioning")
-and selection of alternatives (as was emulated with snippets in
-{{Section 11 of ?RFC8428}}, although an alternative approach for expressing
-variants is demonstrated in {{useful}} based on {{Section 4 of RFC9165}}).
-
-Compatibility
--------------
-
-One approach to achieve the module structure that is friendly to
-existing environments that operate with CDDL 1.0 snippets and CDDL 1.0
-implementations is to add a super-syntax (similar to the way pragmas
-are often added to a language), e.g., by carrying them in what is
-parsed as comments in CDDL 1.0.
-
-This enables each module source file to be valid CDDL 1.0 (if
-missing some rule definitions to be imported).
-
-
-Namespacing
------------
-
-A convention for mapping CDDL-internal names to external ones could be
-developed, possibly steered by some pragma-like constructs.  External
-names would likely be URI-based, with some conventions as they are
-used in RDF or Curies.  Internal names might look similar to XML
-QNames.  Note that the identifier character set for CDDL deliberately
-includes $ and @, which could be used in such a convention.
-
-Note that this convention should not pollute the actual contents of
-the model, where adding a simple prefix to rule names defined
-elsewhere may be all that is needed.
+The previous content of this section formed the basis for {{-modules}}.
+Additional work might be started on the ideas outlined in the
+subsections of this section.
 
 Cross-universe references
 -------------------------
 
 See {{cross}}.
+<!-- {{Appendix A.2 of -cddl-2-draft}}. -->
 
-The "module", "directives"
-------------
-
-A single CDDL file becomes a *module* by processing the (zero or more)
-*directives* in it.
-
-The semantics of the module are independent of the module(s) using it,
-however, using a module may involve transforming its rule names into a
-new namespace.
-
-Directives look like comments in CDDL 1.0, so they do not interfere
-with forward compatibility.
-
-Lines starting with the prefix `;#` are parsed as directives in CDDL
-2.0.
-
-Finding modules
----------------
-
-For now, we assume that module names are filenames taken from one of
-several sources available to the CDDL 2.0 processor via the environment.
-This avoids the need to nail down pathnames or partial URIs into the
-CDDL files.
-
-In the CDDL 2.0 Tool described in {{cddlc-tool}}, the set of sourced is
-determined from an environment value, `CDDL_INCLUDE_PATH`, which is
-modeled after usual command-line search paths.
-It is a colon-separated list of pathnames to directories, with one
-special feature: an empty element points to he tool's own collection.
-In the current version, this collection contains 20 fragments of
-extracted CDDL from published RFCs, using names such as `rfc9052`.
-
-(Future versions might augment this with Web extractors and/or ways to
-extract CDDL modules from github and from Internet-Drafts.)
-
-The default `CDDL_INCLUDE_PATH` is  `.:` — i.e., files are found in the current directory and, if not found there, cddlc’s collection.
-
-Initial Set of Directives {#directives}
--------------------------
-
-Two groups of directives are defined at this point:
-
-* `include`, which includes all the rules from a module (which
-  includes the ones imported/included there, transitively), or
-  specific explicitly selected rules
-
-* `import`, which includes only those rules from the module that are
-   referenced, implicitly or explicitly (see below), including the
-   rules that are referenced from these rules, transitively.
-
-The `include` function is more useful for composing a single model
-from parts controlled by one author, while the `import` function is
-more about treating a module as a library:
-
-{::include code/simple-import.md}
-
-This is appropriate for using libraries that are well known to the
-imported.
-However, if it is not acceptable that the library can pollute the
-namespace of the importing module, the import directive can specify a
-namespace prefix:
-
-{::include code/namespaced-import.md}
-
-Note how the imported names are prefixed with `cose.` as specified in
-the import directive, but CDDL prelude ({{Appendix D of -cddl}}) names such as `tstr` and `any` are not.
-
-Explicit selection of names
----------------------------
-
-Both `import` and `include` directives can be augmented by an explicit
-mentioning of rule names.
-
-Starting with `include`:
-
-{::include code/includefrom.md}
-
-The module from which rules are explicitly imported can be namespaced:
-
-{::include code/includefrom-namespaced.md}
-
-Both examples would work exactly the same with `import`, as the
-included rules do not reference anything else from the included
-module.
-
-An import however also draws in the transitive closure of the rules
-referenced:
-
-{::include code/importfrom-namespaced.md}
-
-The `import` statement can also request an alias for an imported name:
-
-{::include code/importfrom-renamed.md}
-
-Tool Support for Command-Line Control
-------------------
-
-{::include code/zero.md}
-
-In other words, the module had an empty CDDL file, which therefore was
-not provided (no `–` on the command line).
 
 ABNF is a lot like CDDL
 ------------------------
@@ -414,26 +260,6 @@ Additional functionality may be needed for filtering with respect to other
 columns of the registry record, e.g., `<capabilities>` in the case of
 this example.
 
-A CDDL 2.0 Tool {#cddlc-tool}
-===============
-
-This appendix is for information only.
-
-A rough CDDL 2.0 tool is available {{cddlc}}.  It can process CDDL 2.0
-models into CDDL 1.0 models that can then be processed by the CDDL
-tool described in {{Appendix F of -cddl}}.
-
-A typical command line involving both tools might be:
-
-~~~
-cddlc -2 -tcddl mytestfile.cddl | cddl - gp 10
-~~~
-
-Install on a system with a modern Ruby (Ruby version ≥ 3.0) via:
-
-    gem install cddlc
-
-The present document assumes the use of `cddlc` version 0.1.5.
 
 Acknowledgements
 ================
