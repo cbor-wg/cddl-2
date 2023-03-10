@@ -40,12 +40,12 @@ informative:
   I-D.bormann-cbor-update-8610-grammar: grammar
   I-D.bormann-cbor-cddl-more-control: more-controls
   I-D.bormann-cbor-cddl-modules: modules
+  I-D.bormann-cbor-rfc-cddl-models: models
+  I-D.bormann-cbor-draft-numbers: numbers
+  I-D.bormann-cbor-cddl-csv: cddl-csv
   useful:
     target: https://github.com/cbor-wg/cddl/wiki/Useful-CDDL
     title: Useful CDDL
-  cddlc:
-    title: CDDL conversion utilities
-    target: https://github.com/cabo/cddlc
   PSVI:
     target: https://www.w3.org/XML/2002/05/psvi-use-cases
     date: 2002-06-24
@@ -86,6 +86,45 @@ features in parallel to the work described here.
 One such draft, {{-more-controls}}, is planned to form the first set of
 specifications going forward from the CDDL-2 project together with {{-grammar}}.
 
+The rest of this introduction gives a rough overview over what could
+be the development plan for CDDL 1.1, 2.0, 2.5.
+
+## CDDL 1.1 + 2 plan (standards track) {#s11}
+
+* Done before **IETF 117**: CDDL 1.1: {{-grammar}}, *Grammar* fixes:
+  Empty files (enabling CDDL 2), non-literal tags, errata fixes (implemented)
+
+* Done before **IETF 117**: Parallel to CDDL 1.1: More *control* operators
+  {{-more-controls}}: Additional control operators, another iteration like RFC 9165 (implemented)
+
+* Done before **IETF 118**: CDDL 2.0: {{-modules}} (`import`/`include`
+  implemented; potentially further directives to be added)
+
+* Done **2024**: CDDL 2.5: {{anno}} of the present document
+  ("*annotations*", plus some functionality enabled by that).
+  The requirements are clear, the specific form this takes needs to be
+  worked out.
+  Enables, e.g., {{Section 5 of -freezer}} (co-occurrence).
+
+## Other documents {#s12}
+
+Not on the main line of development, but important ancillary work:
+
+* (Informational, Mid-2023): {{Section 5 of -freezer}}:
+  CDDL-in-JSON format(s) for interchange of CDDL model information
+  between tools.
+* (Informational, with {{-modules}}): {{-models}}
+  (builds standard collection of referenceable models).
+* (BCP?): {{-numbers}}
+  (BCP for handling assigned numbers during draft stage)
+
+More explorative at this point:
+
+* (Standards-Track?) The remaining {{syntax}} of this document:
+  application-oriented literals in CDDL; develop with {{-edn-literals}}.
+* (Informational or Standards-Track?): {{-cddl-csv}} (using CDDL to
+  model CSV documents).
+
 Mending syntax deficits {#syntax}
 ======================
 
@@ -97,7 +136,7 @@ Tag-oriented Literals {#tagolit-ref}
 
 Incomplete, see {{tagolit}}.
 
-Processing model: Beyond Validation
+Processing model: Beyond Validation {#anno}
 ================
 
 {:compact}
@@ -157,7 +196,7 @@ Cross-universe references
 -------------------------
 
 See {{cross}}.
-<!-- {{Appendix A.2 of -cddl-2-draft}}. -->
+<!-- {Appendix A.2 of -cddl-2-draft}}. -->
 
 
 ABNF is a lot like CDDL
