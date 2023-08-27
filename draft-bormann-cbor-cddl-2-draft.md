@@ -36,10 +36,10 @@ normative:
 
 informative:
   I-D.bormann-cbor-cddl-freezer: freezer
-  I-D.bormann-cbor-edn-literals: edn-literals
-  I-D.bormann-cbor-update-8610-grammar: grammar
-  I-D.bormann-cbor-cddl-more-control: more-controls
-  I-D.bormann-cbor-cddl-modules: modules
+  I-D.ietf-cbor-edn-literals: edn-literals
+  I-D.ietf-cbor-update-8610-grammar: grammar
+  I-D.ietf-cbor-cddl-more-control: more-controls
+  I-D.ietf-cbor-cddl-modules: modules
   I-D.bormann-cbor-rfc-cddl-models: models
   I-D.bormann-cbor-draft-numbers: numbers
   I-D.bormann-cbor-cddl-csv: cddl-csv
