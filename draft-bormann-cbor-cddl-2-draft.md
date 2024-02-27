@@ -2,10 +2,10 @@
 v: 3
 
 title: >
-  CDDL 2.0 — a draft plan
+  CDDL 2.0 and beyond — a draft plan
 abbrev: CDDL 2.0
 docname: draft-bormann-cbor-cddl-2-draft-latest
-# date: 2022-10-19
+# 2024-02-27
 
 keyword: Internet-Draft
 cat: info
@@ -43,6 +43,13 @@ informative:
   I-D.bormann-cbor-rfc-cddl-models: models
   I-D.bormann-cbor-draft-numbers: numbers
   I-D.bormann-cbor-cddl-csv: cddl-csv
+  I-D.ietf-cbor-packed: packed
+  I-D.ietf-cbor-cde: cde
+  enum-literals:
+    target: https://mailarchive.ietf.org/arch/msg/cbor/D8h_0Egog89GaRLFNwb1VfKlHI4
+    title: >
+      [Cbor] Getting diagnostic notation examples in drafts under control
+    date: 2024-02-26
   useful:
     target: https://github.com/cbor-wg/cddl/wiki/Useful-CDDL
     title: Useful CDDL
@@ -71,8 +78,9 @@ in what potential features it takes up and more detailed in their
 discussion.
 It is intended to serve as a basis for prototypical implementations of
 CDDL 2.0.
-What specific documents spawn from the present one or whether this
-document is evolved into a single CDDL 2.0 specification.
+This document is intended to evolve over time; it might spawn specific
+documents and then retire or eventually be published as a roadmap
+document.
 
 --- middle
 
@@ -91,39 +99,81 @@ be the development plan for CDDL 1.1, 2.0, 2.5.
 
 ## CDDL 1.1 + 2 plan (standards track) {#s11}
 
-* Done before **IETF 117**: CDDL 1.1: {{-grammar}}, *Grammar* fixes:
-  Empty files (enabling CDDL 2), non-literal tags, errata fixes (implemented)
+This section documents the status before **IETF 119**.
 
-* Done before **IETF 117**: Parallel to CDDL 1.1: More *control* operators
-  {{-more-controls}}: Additional control operators, another iteration like RFC 9165 (implemented)
+CDDL 1.1 milestone (documents technically complete, implemented):
 
-* Done before **IETF 118**: CDDL 2.0: {{-modules}} (`import`/`include`
-  implemented; potentially further directives to be added)
+* "CDDL 1.1": {{-grammar}}, *Grammar* fixes:
+  Empty files (enabling CDDL 2), non-literal tags, errata fixes.
+  To be submitted to IESG after addressing one more issue and a short
+  final WGLC.
 
-* Done **2024**: CDDL 2.5: {{anno}} of the present document
+* Parallel to CDDL 1.1: More *control* operators
+  {{-more-controls}}: Additional control operators, another iteration
+  like RFC 9165 before.
+  Ready for WGLC.
+
+CDDL 2.0 work:
+
+* Technically complete before **IETF 119**: CDDL 2.0: {{-modules}}
+  (`import`/`include` directives, implemented).
+  Ready for WGLC.
+* Potentially, further directives to be added.
+  No proposals are ripe for specification; this work could go into a
+  second document constituting "CDDL 2.1" so we have the
+  well-understood `import`/`include` available now.
+
+"CDDL 2.5":
+
+* To be done **2024**: CDDL 2.5: {{anno}} of the present document
   ("*annotations*", plus some functionality enabled by that).
-  The requirements are clear, the specific form this takes needs to be
-  worked out.
+  The requirements are reasonably well-understood;
+  the specific form this takes needs to be worked out.
   Enables, e.g., {{Section 5 of -freezer}} (co-occurrence).
 
 ## Other documents {#s12}
 
 Not on the main line of development, but important ancillary work:
 
-* (Informational, Mid-2023): {{Section 5 of -freezer}}:
+* (Informational, implemented): {{Section 6 (alternative representations) of -freezer}}:
   CDDL-in-JSON format(s) for interchange of CDDL model information
   between tools.
-* (Informational, with {{-modules}}): {{-models}}
+* (Informational, companion to {{-modules}}): {{-models}}
   (builds standard collection of referenceable models).
-* (BCP?): {{-numbers}}
-  (BCP for handling assigned numbers during draft stage)
+* (BCP? Informational?): {{-numbers}}
+  (BCP for handling assigned numbers during draft stage; can stay
+  informational as the work described is completed and any reference
+  to the document erased before a specification using it would be published).
+* Application-oriented literal `e''` so diagnostic notation can refer
+  to named numbers that are specified in CDDL (makes use of {{-edn-literals}},
+  implemented, see {{enum-literals}} for an introduction).
 
 More explorative at this point:
 
 * (Standards-Track?) The remaining {{syntax}} of this document:
-  application-oriented literals in CDDL; develop with {{-edn-literals}}.
+  application-oriented literals in CDDL mirroring the work in
+  {{-edn-literals}}.
 * (Informational or Standards-Track?): {{-cddl-csv}} (using CDDL to
   model CSV documents).
+
+Important CBOR work that may be reflected in some CDDL extensions:
+
+* Evolving Extended Diagnostic Notation {{-edn-literals}}.  While EDN
+  and CDDL are independent languages (with EDN rooted in JSON and CDDL
+  in ABNF and Relax-NG), they are often used together, and
+  developments in one may spawn parallel work in the other.
+
+* Common Deterministic Encoding (CDE) {{-cde}} and related documents.
+  These do define CDDL operators already, which may be sufficient for
+  initial use; this might be extended once more experience has been
+  gained.
+
+* Packed CBOR {{-packed}}.
+  CDDL already can be used to describe the original
+  data item represented in a packed data item.
+  Requirements for describing the latter have not yet been collected;
+  there is some relation to {{transformation (transformation)}} that
+  might need to be explored.
 
 Mending syntax deficits {#syntax}
 ======================
@@ -156,6 +206,9 @@ Validation could also be parameterized with information about what
 features are allowed to be used, enabling variants (see {{Section 4 of
 RFC9165}} and {{useful}} for examples).
 
+Annotations
+-----------
+
 The `cddl` tool ({{Appendix F of RFC8610}}) also supports experimental
 forms of "annotating" a validated data item with information about
 which rules were used to support validation, currently entirely based on the
@@ -172,6 +225,9 @@ as is often done with Schematron validation in Relax-NG; with an
 appropriate evaluation language this can be used for checking co-occurrence
 constraints ({{Section 5 of -freezer}}).
 
+Transformation
+--------------
+
 Finally, annotations are a first step to *transformation*, i.e.,
 describing how a validated data item should be interpreted as a
 transformed data item by performing certain computations.
@@ -179,9 +235,12 @@ This generally requires even more support from an evaluation language,
 simple transformations such as adding in default values may not need
 much support though.
 
+Next Steps
+----------
+
 At this time, existing experimental implementations do not lead to a
 clear choice for what processing model enhancements should be in
-CDDL 2.0.
+CDDL 2.0 follow-ons.
 This document proposes to continue the experimentation and document
 good approaches.
 
@@ -212,7 +271,7 @@ available for ABNF as well.
 IANA Considerations
 ==================
 
-(Insert new registry for application specific literals here, if adopted.)
+This document makes no requests of IANA.
 
 
 Security considerations
@@ -225,8 +284,8 @@ The security considerations of {{-cddl}} apply.
 Fridge
 ======
 
-This appendix contains sections that may not make it to a 2.0, but
-might be part of a followup.
+This appendix contains sections that may not make it to a 2.0
+milestone, but might be part of a followup.
 
 
 Tag-oriented Literals {#tagolit}
@@ -240,12 +299,13 @@ Tag-oriented Literals {#tagolit}
 : backward (not forward)
 
 Some CBOR tags often would be most natural to use in a CDDL spec with a literal
-syntax that is tailored to their semantics instead of their
-serialization in CBOR.  There is currently no way to add such syntaxes, no
+syntax that is tailored to their semantics instead of the
+serialization of their tag content in CBOR.
+There is currently no way to add such syntaxes, no
 defined extension point either.
 
-The proposal
-"Application-Oriented Literals in CBOR Extended Diagnostic Notation"
+The specification
+"CBOR Extended Diagnostic Notation (EDN): Application-Oriented Literals, ABNF, and Media Type"
 {{-edn-literals}} defines application-oriented
 literals, e.g., of the form
 
@@ -254,14 +314,15 @@ literals, e.g., of the form
 for datetime items.  With additional considerations for unambiguous
 syntax, a similar literal form could be included in CDDL.
 
-This proposal opens a name space for the prefix that indicates an
+This proposal opens a namespace for the prefix that indicates an
 application specific literal.
-A registry could be provided to make this name space a genuine
+A registry could be provided to turn this namespace into a genuine
 extension point.
 (This is currently the production `bsqual` in {{Appendix B of RFC8610}}.)
 
 The syntax provided in {{-edn-literals}} does not
-enable the use of CDDL types — it has the same flaw that is being
+enable the use of named CDDL rules — using it directly in CDDL would
+have the same flaw that is being
 fixed for tag numbers in {{Section 3.2 of -grammar}}.
 
 
@@ -274,7 +335,7 @@ different language or platform.
 ### IANA references
 
 In many cases, CDDL specifications make use of values that are
-specified in IANA registries.  The `.iana` control operator can be
+specified in IANA registries.  The proposed `.iana` control operator can be
 used to reference such a set of values.
 
 The reference needs to be able to point to a draft, the registry of
