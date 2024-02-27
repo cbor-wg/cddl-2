@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta content="Common,Latin" name="scripts">
 <meta content="initial-scale=1.0" name="viewport">
-<title>CDDL 2.0 — a draft plan</title>
+<title>CDDL 2.0 and beyond — a draft plan</title>
 <meta content="Carsten Bormann" name="author">
 <meta content='
        The Concise Data Definition Language (CDDL) today is defined by
@@ -22,27 +22,28 @@ in what potential features it takes up and more detailed in their
 discussion.
 It is intended to serve as a basis for prototypical implementations of
 CDDL 2.0.
-What specific documents spawn from the present one or whether this
-document is evolved into a single CDDL 2.0 specification. 
+This document is intended to evolve over time; it might spawn specific
+documents and then retire or eventually be published as a roadmap
+document. 
     ' name="description">
-<meta content="xml2rfc 3.18.0" name="generator">
+<meta content="xml2rfc 3.19.4" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-bormann-cbor-cddl-2-draft-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.18.0
-    Python 3.11.4
-    ConfigArgParse 1.5.3
+  xml2rfc 3.19.4
+    Python 3.11.6
+    ConfigArgParse 1.7
     google-i18n-address 3.1.0
     intervaltree 3.1.0
     Jinja2 3.1.2
     lxml 4.9.3
-    platformdirs 3.10.0
+    platformdirs 4.2.0
     pycountry 22.3.5
-    PyYAML 6.0
+    PyYAML 6.0.1
     requests 2.31.0
-    setuptools 67.7.2
+    setuptools 68.2.2
     six 1.16.0
-    wcwidth 0.2.6
+    wcwidth 0.2.13
 -->
 <link href="draft-bormann-cbor-cddl-2-draft.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -665,7 +666,7 @@ sub, sup {
 }
 #toc nav li {
   line-height: 1.3em;
-  margin: 0.75em 0;
+  margin: 2px 0;
   padding-left: 1.2em;
   text-indent: -1.2em;
 }
@@ -758,7 +759,7 @@ hr.addr {
     z-index: 2;
     top: 0;
     right: 0;
-    padding: 0;
+    padding: 1px 0 0 0;
     margin: 0;
     border-bottom: 1px solid #ccc;
     opacity: 0.6;
@@ -882,16 +883,13 @@ hr.addr {
     border-top: none;
     padding-top: 0;
   }
-  figure, pre {
+  figure, pre, .vcard {
     page-break-inside: avoid;
-  }
-  figure {
-    overflow: scroll;
   }
   h1, h2, h3, h4, h5, h6 {
     page-break-after: avoid;
   }
-  h2+*, h3+*, h4+*, h5+*, h6+* {
+  :is(h2, h3, h4, h5, h6)+*, dd {
     page-break-before: avoid;
   }
   pre {
@@ -904,6 +902,9 @@ hr.addr {
   }
   td {
     border-top: 1px solid #ddd;
+  }
+  .toplink {
+    display: none;
   }
 }
 
@@ -1005,28 +1006,6 @@ address div.right {
   text-align: right;
 }
 
-/* Give the table caption label the same styling as the figcaption */
-
-@media print {
-  .toplink {
-    display: none;
-  }
-
-  /* avoid overwriting the top border line with the ToC header */
-  #toc {
-    padding-top: 1px;
-  }
-
-  /* Avoid page breaks inside dl and author address entries */
-  dd {
-    page-break-before: avoid;
-  }
-  .vcard {
-    page-break-inside: avoid;
-  }
-
-}
-
 /* Dark mode. */
 @media (prefers-color-scheme: dark) {
 :root {
@@ -1063,11 +1042,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">CDDL 2.0</td>
-<td class="right">August 2023</td>
+<td class="right">February 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann</td>
-<td class="center">Expires 28 February 2024</td>
+<td class="center">Expires 30 August 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1080,12 +1059,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-bormann-cbor-cddl-2-draft-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-08-27" class="published">27 August 2023</time>
+<time datetime="2024-02-27" class="published">27 February 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-02-28">28 February 2024</time></dd>
+<dd class="expires"><time datetime="2024-08-30">30 August 2024</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1095,7 +1074,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </dd>
 </dl>
 </div>
-<h1 id="title">CDDL 2.0 — a draft plan</h1>
+<h1 id="title">CDDL 2.0 and beyond — a draft plan</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">The Concise Data Definition Language (CDDL) today is defined by
@@ -1113,8 +1092,9 @@ in what potential features it takes up and more detailed in their
 discussion.
 It is intended to serve as a basis for prototypical implementations of
 CDDL 2.0.
-What specific documents spawn from the present one or whether this
-document is evolved into a single CDDL 2.0 specification.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
+This document is intended to evolve over time; it might spawn specific
+documents and then retire or eventually be published as a roadmap
+document.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1150,7 +1130,7 @@ document is evolved into a single CDDL 2.0 specification.<a href="#section-abst
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 28 February 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 30 August 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1159,7 +1139,7 @@ document is evolved into a single CDDL 2.0 specification.<a href="#section-abst
 <a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
         </h2>
 <p id="section-boilerplate.2-1">
-            Copyright (c) 2023 IETF Trust and the persons identified as the
+            Copyright (c) 2024 IETF Trust and the persons identified as the
             document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.2-2">
             This document is subject to BCP 78 and the IETF Trust's Legal
@@ -1200,6 +1180,17 @@ document is evolved into a single CDDL 2.0 specification.<a href="#section-abst
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
             <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-processing-model-beyond-val" class="internal xref">Processing model: Beyond Validation</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-annotations" class="internal xref">Annotations</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-transformation" class="internal xref">Transformation</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-next-steps" class="internal xref">Next Steps</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
             <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-module-superstructure" class="internal xref">Module superstructure</a></p>
@@ -1272,21 +1263,44 @@ be the development plan for CDDL 1.1, 2.0, 2.5.<a href="#section-1-3" class="pil
         <h3 id="name-cddl-11-2-plan-standards-tr">
 <a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-cddl-11-2-plan-standards-tr" class="section-name selfRef">CDDL 1.1 + 2 plan (standards track)</a>
         </h3>
+<p id="section-1.1-1">This section documents the status before <strong>IETF 119</strong>.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.1-2">CDDL 1.1 milestone (documents technically complete, implemented):<a href="#section-1.1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-1.1-1.1">Done before <strong>IETF 117</strong>: CDDL 1.1: <span>[<a href="#I-D.ietf-cbor-update-8610-grammar" class="cite xref">I-D.ietf-cbor-update-8610-grammar</a>]</span>, <em>Grammar</em> fixes:
-Empty files (enabling CDDL 2), non-literal tags, errata fixes (implemented)<a href="#section-1.1-1.1" class="pilcrow">¶</a>
+<li class="normal" id="section-1.1-3.1">
+            <p id="section-1.1-3.1.1">"CDDL 1.1": <span>[<a href="#I-D.ietf-cbor-update-8610-grammar" class="cite xref">I-D.ietf-cbor-update-8610-grammar</a>]</span>, <em>Grammar</em> fixes:
+Empty files (enabling CDDL 2), non-literal tags, errata fixes.
+To be submitted to IESG after addressing one more issue and a short
+final WGLC.<a href="#section-1.1-3.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-1.1-1.2">Done before <strong>IETF 117</strong>: Parallel to CDDL 1.1: More <em>control</em> operators
-<span>[<a href="#I-D.ietf-cbor-cddl-more-control" class="cite xref">I-D.ietf-cbor-cddl-more-control</a>]</span>: Additional control operators, another iteration like RFC 9165 (implemented)<a href="#section-1.1-1.2" class="pilcrow">¶</a>
+          <li class="normal" id="section-1.1-3.2">
+            <p id="section-1.1-3.2.1">Parallel to CDDL 1.1: More <em>control</em> operators
+<span>[<a href="#I-D.ietf-cbor-cddl-more-control" class="cite xref">I-D.ietf-cbor-cddl-more-control</a>]</span>: Additional control operators, another iteration
+like RFC 9165 before.
+Ready for WGLC.<a href="#section-1.1-3.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-1.1-1.3">Done before <strong>IETF 118</strong>: CDDL 2.0: <span>[<a href="#I-D.ietf-cbor-cddl-modules" class="cite xref">I-D.ietf-cbor-cddl-modules</a>]</span> (<code>import</code>/<code>include</code>
-implemented; potentially further directives to be added)<a href="#section-1.1-1.3" class="pilcrow">¶</a>
+        </ul>
+<p id="section-1.1-4">CDDL 2.0 work:<a href="#section-1.1-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1.1-5.1">
+            <p id="section-1.1-5.1.1">Technically complete before <strong>IETF 119</strong>: CDDL 2.0: <span>[<a href="#I-D.ietf-cbor-cddl-modules" class="cite xref">I-D.ietf-cbor-cddl-modules</a>]</span>
+(<code>import</code>/<code>include</code> directives, implemented).
+Ready for WGLC.<a href="#section-1.1-5.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-1.1-1.4">Done <strong>2024</strong>: CDDL 2.5: <a href="#anno" class="auto internal xref">Section 3</a> of the present document
+          <li class="normal" id="section-1.1-5.2">
+            <p id="section-1.1-5.2.1">Potentially, further directives to be added.
+No proposals are ripe for specification; this work could go into a
+second document constituting "CDDL 2.1" so we have the
+well-understood <code>import</code>/<code>include</code> available now.<a href="#section-1.1-5.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-1.1-6">"CDDL 2.5":<a href="#section-1.1-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1.1-7.1">
+            <p id="section-1.1-7.1.1">To be done <strong>2024</strong>: CDDL 2.5: <a href="#anno" class="auto internal xref">Section 3</a> of the present document
 ("<em>annotations</em>", plus some functionality enabled by that).
-The requirements are clear, the specific form this takes needs to be
-worked out.
-Enables, e.g., <span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-11#section-5" class="relref">Section 5</a> of [<a href="#I-D.bormann-cbor-cddl-freezer" class="cite xref">I-D.bormann-cbor-cddl-freezer</a>]</span> (co-occurrence).<a href="#section-1.1-1.4" class="pilcrow">¶</a>
+The requirements are reasonably well-understood;
+the specific form this takes needs to be worked out.
+Enables, e.g., <span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-12#section-5" class="relref">Section 5</a> of [<a href="#I-D.bormann-cbor-cddl-freezer" class="cite xref">I-D.bormann-cbor-cddl-freezer</a>]</span> (co-occurrence).<a href="#section-1.1-7.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1298,24 +1312,60 @@ Enables, e.g., <span><a href="https://datatracker.ietf.org/doc/html/draft-borman
         </h3>
 <p id="section-1.2-1">Not on the main line of development, but important ancillary work:<a href="#section-1.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-1.2-2.1">(Informational, Mid-2023): <span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-11#section-5" class="relref">Section 5</a> of [<a href="#I-D.bormann-cbor-cddl-freezer" class="cite xref">I-D.bormann-cbor-cddl-freezer</a>]</span>:
+<li class="normal" id="section-1.2-2.1">
+            <p id="section-1.2-2.1.1">(Informational, implemented): Section <span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-12#section-6" class="relref">6</a> (<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-12#section-6" class="relref">alternative representations</a>)</span> of <span>[<a href="#I-D.bormann-cbor-cddl-freezer" class="cite xref">I-D.bormann-cbor-cddl-freezer</a>]</span>:
 CDDL-in-JSON format(s) for interchange of CDDL model information
-between tools.<a href="#section-1.2-2.1" class="pilcrow">¶</a>
+between tools.<a href="#section-1.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-1.2-2.2">(Informational, with <span>[<a href="#I-D.ietf-cbor-cddl-modules" class="cite xref">I-D.ietf-cbor-cddl-modules</a>]</span>): <span>[<a href="#I-D.bormann-cbor-rfc-cddl-models" class="cite xref">I-D.bormann-cbor-rfc-cddl-models</a>]</span>
-(builds standard collection of referenceable models).<a href="#section-1.2-2.2" class="pilcrow">¶</a>
+          <li class="normal" id="section-1.2-2.2">
+            <p id="section-1.2-2.2.1">(Informational, companion to <span>[<a href="#I-D.ietf-cbor-cddl-modules" class="cite xref">I-D.ietf-cbor-cddl-modules</a>]</span>): <span>[<a href="#I-D.bormann-cbor-rfc-cddl-models" class="cite xref">I-D.bormann-cbor-rfc-cddl-models</a>]</span>
+(builds standard collection of referenceable models).<a href="#section-1.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-1.2-2.3">(BCP?): <span>[<a href="#I-D.bormann-cbor-draft-numbers" class="cite xref">I-D.bormann-cbor-draft-numbers</a>]</span>
-(BCP for handling assigned numbers during draft stage)<a href="#section-1.2-2.3" class="pilcrow">¶</a>
+          <li class="normal" id="section-1.2-2.3">
+            <p id="section-1.2-2.3.1">(BCP? Informational?): <span>[<a href="#I-D.bormann-cbor-draft-numbers" class="cite xref">I-D.bormann-cbor-draft-numbers</a>]</span>
+(BCP for handling assigned numbers during draft stage; can stay
+informational as the work described is completed and any reference
+to the document erased before a specification using it would be published).<a href="#section-1.2-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.2-2.4">
+            <p id="section-1.2-2.4.1">Application-oriented literal <code>e''</code> so diagnostic notation can refer
+to named numbers that are specified in CDDL (makes use of <span>[<a href="#I-D.ietf-cbor-edn-literals" class="cite xref">I-D.ietf-cbor-edn-literals</a>]</span>,
+implemented, see <span>[<a href="#enum-literals" class="cite xref">enum-literals</a>]</span> for an introduction).<a href="#section-1.2-2.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-1.2-3">More explorative at this point:<a href="#section-1.2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-1.2-4.1">(Standards-Track?) The remaining <a href="#syntax" class="auto internal xref">Section 2</a> of this document:
-application-oriented literals in CDDL; develop with <span>[<a href="#I-D.ietf-cbor-edn-literals" class="cite xref">I-D.ietf-cbor-edn-literals</a>]</span>.<a href="#section-1.2-4.1" class="pilcrow">¶</a>
+<li class="normal" id="section-1.2-4.1">
+            <p id="section-1.2-4.1.1">(Standards-Track?) The remaining <a href="#syntax" class="auto internal xref">Section 2</a> of this document:
+application-oriented literals in CDDL mirroring the work in
+<span>[<a href="#I-D.ietf-cbor-edn-literals" class="cite xref">I-D.ietf-cbor-edn-literals</a>]</span>.<a href="#section-1.2-4.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-1.2-4.2">(Informational or Standards-Track?): <span>[<a href="#I-D.bormann-cbor-cddl-csv" class="cite xref">I-D.bormann-cbor-cddl-csv</a>]</span> (using CDDL to
-model CSV documents).<a href="#section-1.2-4.2" class="pilcrow">¶</a>
+          <li class="normal" id="section-1.2-4.2">
+            <p id="section-1.2-4.2.1">(Informational or Standards-Track?): <span>[<a href="#I-D.bormann-cbor-cddl-csv" class="cite xref">I-D.bormann-cbor-cddl-csv</a>]</span> (using CDDL to
+model CSV documents).<a href="#section-1.2-4.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-1.2-5">Important CBOR work that may be reflected in some CDDL extensions:<a href="#section-1.2-5" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1.2-6.1">
+            <p id="section-1.2-6.1.1">Evolving Extended Diagnostic Notation <span>[<a href="#I-D.ietf-cbor-edn-literals" class="cite xref">I-D.ietf-cbor-edn-literals</a>]</span>.  While EDN
+and CDDL are independent languages (with EDN rooted in JSON and CDDL
+in ABNF and Relax-NG), they are often used together, and
+developments in one may spawn parallel work in the other.<a href="#section-1.2-6.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.2-6.2">
+            <p id="section-1.2-6.2.1">Common Deterministic Encoding (CDE) <span>[<a href="#I-D.ietf-cbor-cde" class="cite xref">I-D.ietf-cbor-cde</a>]</span> and related documents.
+These do define CDDL operators already, which may be sufficient for
+initial use; this might be extended once more experience has been
+gained.<a href="#section-1.2-6.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.2-6.3">
+            <p id="section-1.2-6.3.1">Packed CBOR <span>[<a href="#I-D.ietf-cbor-packed" class="cite xref">I-D.ietf-cbor-packed</a>]</span>.
+CDDL already can be used to describe the original
+data item represented in a packed data item.
+Requirements for describing the latter have not yet been collected;
+there is some relation to <span><a href="#transformation" class="internal xref">transformation</a> (<a href="#transformation" class="auto internal xref">Section 3.2</a>)</span> that
+might need to be explored.<a href="#section-1.2-6.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1365,7 +1415,12 @@ data item matches that model ("<em>validation</em>").<a href="#section-3-2" clas
 A validation can indicate which features were used.
 Validation could also be parameterized with information about what
 features are allowed to be used, enabling variants (see <span><a href="https://rfc-editor.org/rfc/rfc9165#section-4" class="relref">Section 4</a> of [<a href="#RFC9165" class="cite xref">RFC9165</a>]</span> and <span>[<a href="#useful" class="cite xref">useful</a>]</span> for examples).<a href="#section-3-3" class="pilcrow">¶</a></p>
-<p id="section-3-4">The <code>cddl</code> tool (<span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-F" class="relref">Appendix F</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>) also supports experimental
+<div id="annotations">
+<section id="section-3.1">
+        <h3 id="name-annotations">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-annotations" class="section-name selfRef">Annotations</a>
+        </h3>
+<p id="section-3.1-1">The <code>cddl</code> tool (<span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-F" class="relref">Appendix F</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>) also supports experimental
 forms of "annotating" a validated data item with information about
 which rules were used to support validation, currently entirely based on the
 information that is in a standard CDDL 1.0 data model.
@@ -1374,22 +1429,38 @@ model specification supports "annotating" the validated instance by
 optionally supplying information in the model.
 (The annotated result is a special case of a "post-schema validation
 instance" <span>[<a href="#PSVI" class="cite xref">PSVI</a>]</span>, here one where the data item itself is only
-augmented, not changed, by the process.)<a href="#section-3-4" class="pilcrow">¶</a></p>
-<p id="section-3-5">Annotations could in turn provide input to further validation steps,
+augmented, not changed, by the process.)<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-2">Annotations could in turn provide input to further validation steps,
 as is often done with Schematron validation in Relax-NG; with an
 appropriate evaluation language this can be used for checking co-occurrence
-constraints (<span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-11#section-5" class="relref">Section 5</a> of [<a href="#I-D.bormann-cbor-cddl-freezer" class="cite xref">I-D.bormann-cbor-cddl-freezer</a>]</span>).<a href="#section-3-5" class="pilcrow">¶</a></p>
-<p id="section-3-6">Finally, annotations are a first step to <em>transformation</em>, i.e.,
+constraints (<span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-12#section-5" class="relref">Section 5</a> of [<a href="#I-D.bormann-cbor-cddl-freezer" class="cite xref">I-D.bormann-cbor-cddl-freezer</a>]</span>).<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="transformation">
+<section id="section-3.2">
+        <h3 id="name-transformation">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-transformation" class="section-name selfRef">Transformation</a>
+        </h3>
+<p id="section-3.2-1">Finally, annotations are a first step to <em>transformation</em>, i.e.,
 describing how a validated data item should be interpreted as a
 transformed data item by performing certain computations.
 This generally requires even more support from an evaluation language,
 simple transformations such as adding in default values may not need
-much support though.<a href="#section-3-6" class="pilcrow">¶</a></p>
-<p id="section-3-7">At this time, existing experimental implementations do not lead to a
+much support though.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="next-steps">
+<section id="section-3.3">
+        <h3 id="name-next-steps">
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-next-steps" class="section-name selfRef">Next Steps</a>
+        </h3>
+<p id="section-3.3-1">At this time, existing experimental implementations do not lead to a
 clear choice for what processing model enhancements should be in
-CDDL 2.0.
+CDDL 2.0 follow-ons.
 This document proposes to continue the experimentation and document
-good approaches.<a href="#section-3-7" class="pilcrow">¶</a></p>
+good approaches.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="module-superstructure">
@@ -1428,7 +1499,7 @@ available for ABNF as well.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
       <h2 id="name-iana-considerations">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
-<p id="section-5-1">(Insert new registry for application specific literals here, if adopted.)<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-1">This document makes no requests of IANA.<a href="#section-5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security-considerations">
@@ -1443,6 +1514,7 @@ available for ABNF as well.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
       <h2 id="name-references">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
+<div id="sec-normative-references">
 <section id="section-7.1">
         <h3 id="name-normative-references">
 <a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
@@ -1458,22 +1530,28 @@ available for ABNF as well.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 <dd class="break"></dd>
 </dl>
 </section>
+</div>
+<div id="sec-informative-references">
 <section id="section-7.2">
         <h3 id="name-informative-references">
 <a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
+<dt id="enum-literals">[enum-literals]</dt>
+        <dd>
+<span class="refTitle">"[Cbor] Getting diagnostic notation examples in drafts under control"</span>, <time datetime="2024-02-26" class="refDate">26 February 2024</time>, <span>&lt;<a href="https://mailarchive.ietf.org/arch/msg/cbor/D8h_0Egog89GaRLFNwb1VfKlHI4">https://mailarchive.ietf.org/arch/msg/cbor/D8h_0Egog89GaRLFNwb1VfKlHI4</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="I-D.bormann-cbor-cddl-csv">[I-D.bormann-cbor-cddl-csv]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">H. Birkholz</span>, <span class="refTitle">"Using CDDL for CSVs"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-cddl-csv-03</span>, <time datetime="2023-06-23" class="refDate">23 June 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-csv-03">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-csv-03</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">H. Birkholz</span>, <span class="refTitle">"Using CDDL for CSVs"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-cddl-csv-04</span>, <time datetime="2023-12-24" class="refDate">24 December 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-csv-04">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-csv-04</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.bormann-cbor-cddl-freezer">[I-D.bormann-cbor-cddl-freezer]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"A feature freezer for the Concise Data Definition Language (CDDL)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-cddl-freezer-11</span>, <time datetime="2023-03-11" class="refDate">11 March 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-11">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-11</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"A feature freezer for the Concise Data Definition Language (CDDL)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-cddl-freezer-12</span>, <time datetime="2023-09-02" class="refDate">2 September 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-12">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-12</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.bormann-cbor-draft-numbers">[I-D.bormann-cbor-draft-numbers]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Managing CBOR numbers in Internet-Drafts"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-draft-numbers-01</span>, <time datetime="2023-03-13" class="refDate">13 March 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-draft-numbers-01">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-draft-numbers-01</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Managing CBOR numbers in Internet-Drafts"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-draft-numbers-02</span>, <time datetime="2023-09-02" class="refDate">2 September 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-draft-numbers-02">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-draft-numbers-02</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.bormann-cbor-rfc-cddl-models">[I-D.bormann-cbor-rfc-cddl-models]</dt>
         <dd>
@@ -1481,19 +1559,27 @@ available for ABNF as well.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-cddl-modules">[I-D.ietf-cbor-cddl-modules]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CDDL Module Structure"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-cddl-modules-00</span>, <time datetime="2023-06-17" class="refDate">17 June 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-modules-00">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-modules-00</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CDDL Module Structure"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-cddl-modules-01</span>, <time datetime="2023-12-18" class="refDate">18 December 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-modules-01">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-modules-01</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-cddl-more-control">[I-D.ietf-cbor-cddl-more-control]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"More Control Operators for CDDL"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-cddl-more-control-00</span>, <time datetime="2023-06-14" class="refDate">14 June 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-more-control-00">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-more-control-00</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"More Control Operators for CDDL"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-cddl-more-control-03</span>, <time datetime="2024-02-26" class="refDate">26 February 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-more-control-03">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-more-control-03</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.ietf-cbor-cde">[I-D.ietf-cbor-cde]</dt>
+        <dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CBOR Common Deterministic Encoding (CDE)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-cde-01</span>, <time datetime="2024-01-08" class="refDate">8 January 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cde-01">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cde-01</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-edn-literals">[I-D.ietf-cbor-edn-literals]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Application-Oriented Literals in CBOR Extended Diagnostic Notation"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-literals-02</span>, <time datetime="2023-07-23" class="refDate">23 July 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-02">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-02</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CBOR Extended Diagnostic Notation (EDN): Application-Oriented Literals, ABNF, and Media Type"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-literals-08</span>, <time datetime="2024-02-01" class="refDate">1 February 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-08">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-08</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.ietf-cbor-packed">[I-D.ietf-cbor-packed]</dt>
+        <dd>
+<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">M. Gütschow</span>, <span class="refTitle">"Packed CBOR"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-packed-11</span>, <time datetime="2024-02-26" class="refDate">26 February 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-packed-11">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-packed-11</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-update-8610-grammar">[I-D.ietf-cbor-update-8610-grammar]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Updates to the CDDL grammar of RFC 8610"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-update-8610-grammar-00</span>, <time datetime="2023-06-17" class="refDate">17 June 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-update-8610-grammar-00">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-update-8610-grammar-00</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Updates to the CDDL grammar of RFC 8610"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-update-8610-grammar-03</span>, <time datetime="2024-01-29" class="refDate">29 January 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-update-8610-grammar-03">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-update-8610-grammar-03</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="PSVI">[PSVI]</dt>
         <dd>
@@ -1505,14 +1591,15 @@ available for ABNF as well.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 <dd class="break"></dd>
 </dl>
 </section>
+</div>
 </section>
 <div id="fridge">
 <section id="appendix-A">
       <h2 id="name-fridge">
 <a href="#appendix-A" class="section-number selfRef">Appendix A. </a><a href="#name-fridge" class="section-name selfRef">Fridge</a>
       </h2>
-<p id="appendix-A-1">This appendix contains sections that may not make it to a 2.0, but
-might be part of a followup.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-1">This appendix contains sections that may not make it to a 2.0
+milestone, but might be part of a followup.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
 <div id="tagolit">
 <section id="appendix-A.1">
         <h3 id="name-tag-oriented-literals-2">
@@ -1533,11 +1620,12 @@ might be part of a followup.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
         <dd class="break"></dd>
 </dl>
 <p id="appendix-A.1-2">Some CBOR tags often would be most natural to use in a CDDL spec with a literal
-syntax that is tailored to their semantics instead of their
-serialization in CBOR.  There is currently no way to add such syntaxes, no
+syntax that is tailored to their semantics instead of the
+serialization of their tag content in CBOR.
+There is currently no way to add such syntaxes, no
 defined extension point either.<a href="#appendix-A.1-2" class="pilcrow">¶</a></p>
-<p id="appendix-A.1-3">The proposal
-"Application-Oriented Literals in CBOR Extended Diagnostic Notation"
+<p id="appendix-A.1-3">The specification
+"CBOR Extended Diagnostic Notation (EDN): Application-Oriented Literals, ABNF, and Media Type"
 <span>[<a href="#I-D.ietf-cbor-edn-literals" class="cite xref">I-D.ietf-cbor-edn-literals</a>]</span> defines application-oriented
 literals, e.g., of the form<a href="#appendix-A.1-3" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
@@ -1547,14 +1635,15 @@ literals, e.g., of the form<a href="#appendix-A.1-3" class="pilcrow">¶</a></p>
         </ul>
 <p id="appendix-A.1-5">for datetime items.  With additional considerations for unambiguous
 syntax, a similar literal form could be included in CDDL.<a href="#appendix-A.1-5" class="pilcrow">¶</a></p>
-<p id="appendix-A.1-6">This proposal opens a name space for the prefix that indicates an
+<p id="appendix-A.1-6">This proposal opens a namespace for the prefix that indicates an
 application specific literal.
-A registry could be provided to make this name space a genuine
+A registry could be provided to turn this namespace into a genuine
 extension point.
 (This is currently the production <code>bsqual</code> in <span><a href="https://rfc-editor.org/rfc/rfc8610#appendix-B" class="relref">Appendix B</a> of [<a href="#RFC8610" class="cite xref">RFC8610</a>]</span>.)<a href="#appendix-A.1-6" class="pilcrow">¶</a></p>
 <p id="appendix-A.1-7">The syntax provided in <span>[<a href="#I-D.ietf-cbor-edn-literals" class="cite xref">I-D.ietf-cbor-edn-literals</a>]</span> does not
-enable the use of CDDL types — it has the same flaw that is being
-fixed for tag numbers in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-update-8610-grammar-00#section-3.2" class="relref">Section 3.2</a> of [<a href="#I-D.ietf-cbor-update-8610-grammar" class="cite xref">I-D.ietf-cbor-update-8610-grammar</a>]</span>.<a href="#appendix-A.1-7" class="pilcrow">¶</a></p>
+enable the use of named CDDL rules — using it directly in CDDL would
+have the same flaw that is being
+fixed for tag numbers in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-update-8610-grammar-03#section-3.2" class="relref">Section 3.2</a> of [<a href="#I-D.ietf-cbor-update-8610-grammar" class="cite xref">I-D.ietf-cbor-update-8610-grammar</a>]</span>.<a href="#appendix-A.1-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="cross">
@@ -1570,7 +1659,7 @@ different language or platform.<a href="#appendix-A.2-1" class="pilcrow">¶</a><
 <a href="#appendix-A.2.1" class="section-number selfRef">A.2.1. </a><a href="#name-iana-references" class="section-name selfRef">IANA references</a>
           </h4>
 <p id="appendix-A.2.1-1">In many cases, CDDL specifications make use of values that are
-specified in IANA registries.  The <code>.iana</code> control operator can be
+specified in IANA registries.  The proposed <code>.iana</code> control operator can be
 used to reference such a set of values.<a href="#appendix-A.2.1-1" class="pilcrow">¶</a></p>
 <p id="appendix-A.2.1-2">The reference needs to be able to point to a draft, the registry of
 which has not been established yet, as well as to an established IANA registry.<a href="#appendix-A.2.1-2" class="pilcrow">¶</a></p>
