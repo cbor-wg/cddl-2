@@ -5,7 +5,7 @@ title: >
   CDDL 2.0 and beyond — a draft plan
 abbrev: CDDL 2.0
 docname: draft-bormann-cbor-cddl-2-draft-latest
-# 2024-02-27
+# 2024-08-27
 
 keyword: Internet-Draft
 cat: info
@@ -99,25 +99,25 @@ be the development plan for CDDL 1.1, 2.0, 2.5.
 
 ## CDDL 1.1 + 2 plan (standards track) {#s11}
 
-This section documents the status before **IETF 119**.
+This section documents the status in Summer 2024.
 
 CDDL 1.1 milestone (documents technically complete, implemented):
 
 * "CDDL 1.1": {{-grammar}}, *Grammar* fixes:
   Empty files (enabling CDDL 2), non-literal tags, errata fixes.
-  To be submitted to IESG after addressing one more issue and a short
-  final WGLC.
+  Approved document, in RFC editor queue (EDIT state) at the time of writing.
 
 * Parallel to CDDL 1.1: More *control* operators
   {{-more-controls}}: Additional control operators, another iteration
   like RFC 9165 before.
-  Ready for WGLC.
+  Passed WGLC, to be submitted to IESG after a final chair check.
 
 CDDL 2.0 work:
 
 * Technically complete before **IETF 119**: CDDL 2.0: {{-modules}}
   (`import`/`include` directives, implemented).
-  Ready for WGLC.
+  Feedback is available from IETF 119, one open technical issue
+  (sockets); WGLC before IETF 121.
 * Potentially, further directives to be added.
   No proposals are ripe for specification; this work could go into a
   second document constituting "CDDL 2.1" so we have the
@@ -125,7 +125,7 @@ CDDL 2.0 work:
 
 "CDDL 2.5":
 
-* To be done **2024**: CDDL 2.5: {{anno}} of the present document
+* Being prepared in **2024**: CDDL 2.5: {{anno}} of the present document
   ("*annotations*", plus some functionality enabled by that).
   The requirements are reasonably well-understood;
   the specific form this takes needs to be worked out.
@@ -357,6 +357,9 @@ would come from applying the XPath expression
 
 to `https://www.iana.org/assignments/cose/cose.xml`, plus some
 filtering on the records returned that only leaves actual allocations.
+{{Section 3.1 of -models}} contains an example of a CDDL module that is
+automatically generated from those assignments.
+
 Additional functionality may be needed for filtering with respect to other
 columns of the registry record, e.g., `<capabilities>` in the case of
 this example.
