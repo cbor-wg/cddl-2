@@ -4,8 +4,8 @@
 
 CBOR Working group                                            C. Bormann
 Internet-Draft                                    Universität Bremen TZI
-Intended status: Informational                          27 February 2024
-Expires: 30 August 2024
+Intended status: Informational                            27 August 2024
+Expires: 28 February 2025
 
 
                    CDDL 2.0 and beyond — a draft plan
@@ -61,7 +61,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 August 2024.
+   This Internet-Draft will expire on 28 February 2025.
 
 Copyright Notice
 
@@ -118,24 +118,26 @@ Table of Contents
 
 1.1.  CDDL 1.1 + 2 plan (standards track)
 
-   This section documents the status before *IETF 119*.
+   This section documents the status in Summer 2024.
 
    CDDL 1.1 milestone (documents technically complete, implemented):
 
    *  "CDDL 1.1": [I-D.ietf-cbor-update-8610-grammar], _Grammar_ fixes:
-      Empty files (enabling CDDL 2), non-literal tags, errata fixes.  To
-      be submitted to IESG after addressing one more issue and a short
-      final WGLC.
+      Empty files (enabling CDDL 2), non-literal tags, errata fixes.
+      Approved document, in RFC editor queue (EDIT state) at the time of
+      writing.
 
    *  Parallel to CDDL 1.1: More _control_ operators
       [I-D.ietf-cbor-cddl-more-control]: Additional control operators,
-      another iteration like RFC 9165 before.  Ready for WGLC.
+      another iteration like RFC 9165 before.  Passed WGLC, to be
+      submitted to IESG after a final chair check.
 
    CDDL 2.0 work:
 
    *  Technically complete before *IETF 119*: CDDL 2.0:
       [I-D.ietf-cbor-cddl-modules] (import/include directives,
-      implemented).  Ready for WGLC.
+      implemented).  Feedback is available from IETF 119, one open
+      technical issue (sockets); WGLC before IETF 121.
 
    *  Potentially, further directives to be added.  No proposals are
       ripe for specification; this work could go into a second document
@@ -144,11 +146,11 @@ Table of Contents
 
    "CDDL 2.5":
 
-   *  To be done *2024*: CDDL 2.5: Section 3 of the present document
-      ("_annotations_", plus some functionality enabled by that).  The
-      requirements are reasonably well-understood; the specific form
-      this takes needs to be worked out.  Enables, e.g., Section 5 of
-      [I-D.bormann-cbor-cddl-freezer] (co-occurrence).
+   *  Being prepared in *2024*: CDDL 2.5: Section 3 of the present
+      document ("_annotations_", plus some functionality enabled by
+      that).  The requirements are reasonably well-understood; the
+      specific form this takes needs to be worked out.  Enables, e.g.,
+      Section 5 of [I-D.bormann-cbor-cddl-freezer] (co-occurrence).
 
 1.2.  Other documents
 
@@ -313,70 +315,68 @@ Table of Contents
    [I-D.bormann-cbor-cddl-csv]
               Bormann, C. and H. Birkholz, "Using CDDL for CSVs", Work
               in Progress, Internet-Draft, draft-bormann-cbor-cddl-csv-
-              04, 24 December 2023,
-              <https://datatracker.ietf.org/doc/html/draft-bormann-cbor-
-              cddl-csv-04>.
+              05, 16 June 2024, <https://datatracker.ietf.org/doc/html/
+              draft-bormann-cbor-cddl-csv-05>.
 
    [I-D.bormann-cbor-cddl-freezer]
               Bormann, C., "A feature freezer for the Concise Data
               Definition Language (CDDL)", Work in Progress, Internet-
-              Draft, draft-bormann-cbor-cddl-freezer-12, 2 September
-              2023, <https://datatracker.ietf.org/doc/html/draft-
-              bormann-cbor-cddl-freezer-12>.
+              Draft, draft-bormann-cbor-cddl-freezer-13, 28 February
+              2024, <https://datatracker.ietf.org/doc/html/draft-
+              bormann-cbor-cddl-freezer-13>.
 
    [I-D.bormann-cbor-draft-numbers]
               Bormann, C., "Managing CBOR numbers in Internet-Drafts",
               Work in Progress, Internet-Draft, draft-bormann-cbor-
-              draft-numbers-02, 2 September 2023,
+              draft-numbers-03, 29 February 2024,
               <https://datatracker.ietf.org/doc/html/draft-bormann-cbor-
-              draft-numbers-02>.
+              draft-numbers-03>.
 
    [I-D.bormann-cbor-rfc-cddl-models]
               Bormann, C., "CDDL models for some existing RFCs", Work in
               Progress, Internet-Draft, draft-bormann-cbor-rfc-cddl-
-              models-02, 27 August 2023,
+              models-04, 27 August 2024,
               <https://datatracker.ietf.org/doc/html/draft-bormann-cbor-
-              rfc-cddl-models-02>.
+              rfc-cddl-models-04>.
 
    [I-D.ietf-cbor-cddl-modules]
-              Bormann, C., "CDDL Module Structure", Work in Progress,
-              Internet-Draft, draft-ietf-cbor-cddl-modules-01, 18
-              December 2023, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-cbor-cddl-modules-01>.
+              Bormann, C. and B. Moran, "CDDL Module Structure", Work in
+              Progress, Internet-Draft, draft-ietf-cbor-cddl-modules-02,
+              4 March 2024, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-cbor-cddl-modules-02>.
 
    [I-D.ietf-cbor-cddl-more-control]
               Bormann, C., "More Control Operators for CDDL", Work in
               Progress, Internet-Draft, draft-ietf-cbor-cddl-more-
-              control-03, 26 February 2024,
+              control-06, 21 July 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-cbor-
-              cddl-more-control-03>.
+              cddl-more-control-06>.
 
    [I-D.ietf-cbor-cde]
               Bormann, C., "CBOR Common Deterministic Encoding (CDE)",
-              Work in Progress, Internet-Draft, draft-ietf-cbor-cde-01,
-              8 January 2024, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-cbor-cde-01>.
+              Work in Progress, Internet-Draft, draft-ietf-cbor-cde-05,
+              25 July 2024, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-cbor-cde-05>.
 
    [I-D.ietf-cbor-edn-literals]
-              Bormann, C., "CBOR Extended Diagnostic Notation (EDN):
-              Application-Oriented Literals, ABNF, and Media Type", Work
-              in Progress, Internet-Draft, draft-ietf-cbor-edn-literals-
-              08, 1 February 2024,
+              Bormann, C., "CBOR Extended Diagnostic Notation (EDN)",
+              Work in Progress, Internet-Draft, draft-ietf-cbor-edn-
+              literals-11, 21 August 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-cbor-
-              edn-literals-08>.
+              edn-literals-11>.
 
    [I-D.ietf-cbor-packed]
               Bormann, C. and M. Gütschow, "Packed CBOR", Work in
-              Progress, Internet-Draft, draft-ietf-cbor-packed-11, 26
-              February 2024, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-cbor-packed-11>.
+              Progress, Internet-Draft, draft-ietf-cbor-packed-12, 2
+              March 2024, <https://datatracker.ietf.org/doc/html/draft-
+              ietf-cbor-packed-12>.
 
    [I-D.ietf-cbor-update-8610-grammar]
               Bormann, C., "Updates to the CDDL grammar of RFC 8610",
               Work in Progress, Internet-Draft, draft-ietf-cbor-update-
-              8610-grammar-03, 29 January 2024,
+              8610-grammar-06, 24 June 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-cbor-
-              update-8610-grammar-03>.
+              update-8610-grammar-06>.
 
    [PSVI]     "Use Cases for XML Schema PSVI API", 24 June 2002,
               <https://www.w3.org/XML/2002/05/psvi-use-cases>.
@@ -446,9 +446,13 @@ A.2.1.  IANA references
 
    to https://www.iana.org/assignments/cose/cose.xml, plus some
    filtering on the records returned that only leaves actual
-   allocations.  Additional functionality may be needed for filtering
-   with respect to other columns of the registry record, e.g.,
-   <capabilities> in the case of this example.
+   allocations.  Section 3.1 of [I-D.bormann-cbor-rfc-cddl-models]
+   contains an example of a CDDL module that is automatically generated
+   from those assignments.
+
+   Additional functionality may be needed for filtering with respect to
+   other columns of the registry record, e.g., <capabilities> in the
+   case of this example.
 
 Acknowledgements
 
