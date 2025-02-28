@@ -7,6 +7,7 @@ This is the working area for the individual Internet-Draft, "CDDL&#xA0;2.0 and b
 * [Individual Draft](https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-2-draft)
 * [Compare Editor's Copy to Individual Draft](https://cbor-wg.github.io/cddl-2/#go.draft-bormann-cbor-cddl-2-draft.diff)
 
+[Access to all branches](https://cbor-wg.github.io/cddl-2/)
 
 ## Contributing
 
