@@ -1,6 +1,6 @@
-# CDDL 2.0 — a draft plan
+# CDDL&#xA0;2.0 and beyond &#x2014; a draft plan
 
-This is the working area for the individual Internet-Draft, "CDDL 2.0 — a draft plan".
+This is the working area for the individual Internet-Draft, "CDDL&#xA0;2.0 and beyond &#x2014; a draft plan".
 
 * [Editor's Copy](https://cbor-wg.github.io/cddl-2/#go.draft-bormann-cbor-cddl-2-draft.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-bormann-cbor-cddl-2-draft)
