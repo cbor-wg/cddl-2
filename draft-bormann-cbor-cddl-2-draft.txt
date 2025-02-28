@@ -14,22 +14,23 @@ Expires: 1 September 2025
 Abstract
 
    The Concise Data Definition Language (CDDL) today is defined by
-   RFC 8610 and RFC 9165.  The latter (as well as some more application
-   specific specifications such as RFC 9090) have used the extension
-   point provided in RFC 8610, the control operator.
+   RFC 8610, RFC 9165, RFC 9682, and draft-ietf-cbor-cddl-more-control
+   (RFC-to-be 9741).  RFC 9165 and the latter (as well as some more
+   application specific specifications such as RFC 9090) have used the
+   extension point provided in RFC 8610, the control operator.
 
    As CDDL is used in larger projects, feature requirements become known
    that cannot be easily mapped into this single extension point.
    Hence, there is a need for evolution of the base CDDL specification
    itself.
 
-   The present document provides a roadmap towards a "CDDL 2.0".  It is
-   based on draft-bormann-cbor-cddl-freezer, but is more selective in
-   what potential features it takes up and more detailed in their
-   discussion.  It is intended to serve as a basis for prototypical
-   implementations of CDDL 2.0.  This document is intended to evolve
-   over time; it might spawn specific documents and then retire or
-   eventually be published as a roadmap document.
+   The present document provides a roadmap towards a "CDDL 2.0"; it is
+   intended to serve as a basis for implementations that evolve with the
+   concept of CDDL 2.0.  It is based on draft-bormann-cbor-cddl-freezer,
+   but is more selective in what potential features it takes up and more
+   detailed in their discussion.  This document is intended to evolve
+   over time; it might spawn specific documents and then retire, or it
+   might eventually be published as a roadmap document.
 
 About This Document
 
@@ -46,10 +47,9 @@ About This Document
    Source for this draft and an issue tracker can be found at
    https://github.com/cbor-wg/cddl-2.
 
-Status of This Memo
 
-   This Internet-Draft is submitted in full conformance with the
-   provisions of BCP 78 and BCP 79.
+
+
 
 
 
@@ -57,6 +57,11 @@ Bormann                 Expires 1 September 2025                [Page 1]
 
 Internet-Draft                  CDDL 2.0                   February 2025
 
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
 
    Internet-Drafts are working documents of the Internet Engineering
    Task Force (IETF).  Note that other groups may also distribute
@@ -101,11 +106,6 @@ Table of Contents
    5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   6
    6.  Security considerations . . . . . . . . . . . . . . . . . . .   7
    7.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   7
-     7.1.  Normative References  . . . . . . . . . . . . . . . . . .   7
-     7.2.  Informative References  . . . . . . . . . . . . . . . . .   7
-   Appendix A.  Fridge . . . . . . . . . . . . . . . . . . . . . . .   9
-     A.1.  Tag-oriented Literals . . . . . . . . . . . . . . . . . .   9
-     A.2.  Cross-universe references . . . . . . . . . . . . . . . .   9
 
 
 
@@ -114,6 +114,11 @@ Bormann                 Expires 1 September 2025                [Page 2]
 Internet-Draft                  CDDL 2.0                   February 2025
 
 
+     7.1.  Normative References  . . . . . . . . . . . . . . . . . .   7
+     7.2.  Informative References  . . . . . . . . . . . . . . . . .   7
+   Appendix A.  Fridge . . . . . . . . . . . . . . . . . . . . . . .   9
+     A.1.  Tag-oriented Literals . . . . . . . . . . . . . . . . . .   9
+     A.2.  Cross-universe references . . . . . . . . . . . . . . . .  10
        A.2.1.  IANA references . . . . . . . . . . . . . . . . . . .  10
    Acknowledgements  . . . . . . . . . . . . . . . . . . . . . . . .  10
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  10
@@ -123,10 +128,10 @@ Internet-Draft                  CDDL 2.0                   February 2025
    (Please see abstract.)
 
    Note that the existing extension point can be exercised for new
-   features in parallel to the work described here.  One such draft,
-   [I-D.ietf-cbor-cddl-more-control], is planned to form the first set
-   of specifications going forward from the CDDL-2 project together with
-   [I-D.ietf-cbor-update-8610-grammar].
+   features in parallel to the work described here.
+   [I-D.ietf-cbor-cddl-more-control] (recently approved, RFC-to-be
+   9741), forms part of the first set of specifications going forward
+   from the CDDL-2 project together with [RFC9682].
 
    The rest of this introduction gives a rough overview over what could
    be the development plan for CDDL 1.1, 2.0, 2.5.
@@ -137,30 +142,25 @@ Internet-Draft                  CDDL 2.0                   February 2025
 
    CDDL 1.1 milestone (documents technically complete, implemented):
 
-   *  "CDDL 1.1": [I-D.ietf-cbor-update-8610-grammar], _Grammar_ fixes:
-      Empty files (enabling CDDL 2), non-literal tags, errata fixes.
-      Approved document, in RFC editor queue (EDIT state) at the time of
-      writing.
+   *  "CDDL 1.1": [RFC9682], _Grammar_ fixes: Empty files (enabling CDDL
+      2), non-literal tags, errata fixes.  Approved document, in RFC
+      editor queue (EDIT state) at the time of writing.
 
    *  Parallel to CDDL 1.1: More _control_ operators
-      [I-D.ietf-cbor-cddl-more-control]: Additional control operators,
-      another iteration like RFC 9165 before.  Passed WGLC, to be
-      submitted to IESG after a final chair check.
+      [I-D.ietf-cbor-cddl-more-control], RFC-to-be 9741: Additional
+      control operators, another iteration like RFC 9165 before.
 
    CDDL 2.0 work:
 
    *  Technically complete before *IETF 119*: CDDL 2.0:
       [I-D.ietf-cbor-cddl-modules] (import/include directives,
       implemented).  Feedback is available from IETF 119, one open
-      technical issue (sockets); WGLC before IETF 121.
+      technical issue (sockets); WGLC 1H2025.
 
    *  Potentially, further directives to be added.  No proposals are
       ripe for specification; this work could go into a second document
       constituting "CDDL 2.1" so we have the well-understood import/
       include available now.
-
-   "CDDL 2.5":
-
 
 
 
@@ -170,7 +170,9 @@ Bormann                 Expires 1 September 2025                [Page 3]
 Internet-Draft                  CDDL 2.0                   February 2025
 
 
-   *  Being prepared in *2024*: CDDL 2.5: Section 3 of the present
+   "CDDL 2.5":
+
+   *  Being prepared in *1H2025*: CDDL 2.5: Section 3 of the present
       document ("_annotations_", plus some functionality enabled by
       that).  The requirements are reasonably well-understood; the
       specific form this takes needs to be worked out.  Enables, e.g.,
@@ -194,10 +196,10 @@ Internet-Draft                  CDDL 2.0                   February 2025
       to the document erased before a specification using it would be
       published).
 
-   *  Application-oriented literal e'' so diagnostic notation can refer
-      to named numbers that are specified in CDDL (makes use of
-      [I-D.ietf-cbor-edn-literals], implemented, see [enum-literals] for
-      an introduction).
+   *  Application-oriented literal e'' [I-D.ietf-cbor-edn-e-ref] makes
+      use of [I-D.ietf-cbor-edn-literals] so that diagnostic notation
+      can refer to named numbers that are specified in CDDL.
+      Implemented, see [enum-literals] for an introduction.
 
    More explorative at this point:
 
@@ -215,8 +217,6 @@ Internet-Draft                  CDDL 2.0                   February 2025
       languages (with EDN rooted in JSON and CDDL in ABNF and Relax-NG),
       they are often used together, and developments in one may spawn
       parallel work in the other.
-
-
 
 
 
@@ -239,8 +239,8 @@ Internet-Draft                  CDDL 2.0                   February 2025
 
 2.  Mending syntax deficits
 
-   The previous content of this section formed the basis for
-   [I-D.ietf-cbor-update-8610-grammar], except for Section 2.1.
+   The previous content of this section formed the basis for [RFC9682],
+   except for Section 2.1.
 
 2.1.  Tag-oriented Literals
 
@@ -365,6 +365,11 @@ Internet-Draft                  CDDL 2.0                   February 2025
               <https://mailarchive.ietf.org/arch/msg/cbor/
               D8h_0Egog89GaRLFNwb1VfKlHI4>.
 
+   [EXTRACT-RB]
+              "extract.rb — extract CDDL from an enum-style IANA
+              registry", n.d., <https://github.com/cabo/common-
+              cddl/blob/main/extract.rb>.
+
    [I-D.bormann-cbor-cddl-csv]
               Bormann, C. and H. Birkholz, "Using CDDL for CSVs", Work
               in Progress, Internet-Draft, draft-bormann-cbor-cddl-csv-
@@ -381,11 +386,6 @@ Internet-Draft                  CDDL 2.0                   February 2025
    [I-D.bormann-cbor-draft-numbers]
               Bormann, C., "Managing CBOR codepoints in Internet-
               Drafts", Work in Progress, Internet-Draft, draft-bormann-
-              cbor-draft-numbers-04, 29 August 2024,
-              <https://datatracker.ietf.org/doc/html/draft-bormann-cbor-
-              draft-numbers-04>.
-
-
 
 
 
@@ -393,6 +393,10 @@ Bormann                 Expires 1 September 2025                [Page 7]
 
 Internet-Draft                  CDDL 2.0                   February 2025
 
+
+              cbor-draft-numbers-04, 29 August 2024,
+              <https://datatracker.ietf.org/doc/html/draft-bormann-cbor-
+              draft-numbers-04>.
 
    [I-D.bormann-cbor-rfc-cddl-models]
               Bormann, C., "CDDL models for some existing RFCs", Work in
@@ -421,6 +425,13 @@ Internet-Draft                  CDDL 2.0                   February 2025
               10 February 2025, <https://datatracker.ietf.org/doc/html/
               draft-ietf-cbor-cde-08>.
 
+   [I-D.ietf-cbor-edn-e-ref]
+              Bormann, C., "External References to Values in CBOR
+              Diagnostic Notation (EDN)", Work in Progress, Internet-
+              Draft, draft-ietf-cbor-edn-e-ref-01, 29 December 2024,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-cbor-
+              edn-e-ref-01>.
+
    [I-D.ietf-cbor-edn-literals]
               Bormann, C., "CBOR Extended Diagnostic Notation (EDN)",
               Work in Progress, Internet-Draft, draft-ietf-cbor-edn-
@@ -428,18 +439,7 @@ Internet-Draft                  CDDL 2.0                   February 2025
               <https://datatracker.ietf.org/doc/html/draft-ietf-cbor-
               edn-literals-16>.
 
-   [I-D.ietf-cbor-packed]
-              Bormann, C. and M. Gütschow, "Packed CBOR", Work in
-              Progress, Internet-Draft, draft-ietf-cbor-packed-13, 1
-              September 2024, <https://datatracker.ietf.org/doc/html/
-              draft-ietf-cbor-packed-13>.
 
-   [I-D.ietf-cbor-update-8610-grammar]
-              Bormann, C., "Updates to the CDDL grammar of RFC 8610",
-              Work in Progress, Internet-Draft, draft-ietf-cbor-update-
-              8610-grammar-06, 24 June 2024,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-cbor-
-              update-8610-grammar-06>.
 
 
 
@@ -450,8 +450,18 @@ Bormann                 Expires 1 September 2025                [Page 8]
 Internet-Draft                  CDDL 2.0                   February 2025
 
 
+   [I-D.ietf-cbor-packed]
+              Bormann, C. and M. Gütschow, "Packed CBOR", Work in
+              Progress, Internet-Draft, draft-ietf-cbor-packed-13, 1
+              September 2024, <https://datatracker.ietf.org/doc/html/
+              draft-ietf-cbor-packed-13>.
+
    [PSVI]     "Use Cases for XML Schema PSVI API", 24 June 2002,
               <https://www.w3.org/XML/2002/05/psvi-use-cases>.
+
+   [RFC9682]  Bormann, C., "Updates to the Concise Data Definition
+              Language (CDDL) Grammar", RFC 9682, DOI 10.17487/RFC9682,
+              November 2024, <https://www.rfc-editor.org/rfc/rfc9682>.
 
    [useful]   "Useful CDDL", n.d.,
               <https://github.com/cbor-wg/cddl/wiki/Useful-CDDL>.
@@ -486,16 +496,6 @@ A.1.  Tag-oriented Literals
    this namespace into a genuine extension point.  (This is currently
    the production bsqual in Appendix B of [RFC8610].)
 
-   The syntax provided in [I-D.ietf-cbor-edn-literals] does not enable
-   the use of named CDDL rules — using it directly in CDDL would have
-   the same flaw that is being fixed for tag numbers in Section 3.2 of
-   [I-D.ietf-cbor-update-8610-grammar].
-
-A.2.  Cross-universe references
-
-   Often, a CDDL specification needs to import from specifications in a
-   different language or platform.
-
 
 
 
@@ -505,6 +505,16 @@ Bormann                 Expires 1 September 2025                [Page 9]
 
 Internet-Draft                  CDDL 2.0                   February 2025
 
+
+   The syntax provided in [I-D.ietf-cbor-edn-literals] does not enable
+   the use of named CDDL rules — using it directly in CDDL would have
+   the same flaw that is being fixed for tag numbers in Section 3.2 of
+   [RFC9682].
+
+A.2.  Cross-universe references
+
+   Often, a CDDL specification needs to import from specifications in a
+   different language or platform.
 
 A.2.1.  IANA references
 
@@ -530,7 +540,9 @@ A.2.1.  IANA references
    filtering on the records returned that only leaves actual
    allocations.  Section 3.1 of [I-D.bormann-cbor-rfc-cddl-models]
    contains an example of a CDDL module that is automatically generated
-   from those assignments.
+   from those assignments.  (The code for this extraction is available
+   in the document source repository of
+   [I-D.bormann-cbor-rfc-cddl-models] as [EXTRACT-RB].)
 
    Additional functionality may be needed for filtering with respect to
    other columns of the registry record, e.g., <capabilities> in the
@@ -541,6 +553,14 @@ Acknowledgements
    TBD
 
 Author's Address
+
+
+
+
+Bormann                 Expires 1 September 2025               [Page 10]
+
+Internet-Draft                  CDDL 2.0                   February 2025
+
 
    Carsten Bormann
    Universität Bremen TZI
@@ -557,4 +577,40 @@ Author's Address
 
 
 
-Bormann                 Expires 1 September 2025               [Page 10]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Bormann                 Expires 1 September 2025               [Page 11]
