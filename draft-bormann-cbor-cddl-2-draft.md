@@ -37,10 +37,14 @@ normative:
 informative:
   I-D.bormann-cbor-cddl-freezer: freezer
   I-D.ietf-cbor-edn-literals: edn-literals
-  I-D.ietf-cbor-update-8610-grammar: grammar
+  I-D.ietf-cbor-edn-e-ref: e-ref
+  RFC9682: grammar
   I-D.ietf-cbor-cddl-more-control: more-controls
   I-D.ietf-cbor-cddl-modules: modules
   I-D.bormann-cbor-rfc-cddl-models: models
+  EXTRACT-RB:
+    target: https://github.com/cabo/common-cddl/blob/main/extract.rb
+    title: extract.rb — extract CDDL from an enum-style IANA registry
   I-D.bormann-cbor-draft-numbers: numbers
   I-D.bormann-cbor-cddl-csv: cddl-csv
   I-D.ietf-cbor-packed: packed
@@ -62,8 +66,9 @@ informative:
 --- abstract
 
 The Concise Data Definition Language (CDDL) today is defined by
-RFC 8610 and RFC 9165.
-The latter (as well as some more application specific specifications
+RFC 8610, RFC 9165, RFC 9682, and draft-ietf-cbor-cddl-more-control
+(RFC-to-be 9741).
+RFC 9165 and the latter (as well as some more application specific specifications
 such as RFC 9090) have used the extension point provided in RFC 8610,
 the control operator.
 
@@ -72,14 +77,14 @@ that cannot be easily mapped into this single extension point.
 Hence, there is a need for evolution of the base CDDL specification
 itself.
 
-The present document provides a roadmap towards a "CDDL 2.0".
+The present document provides a roadmap towards a "CDDL 2.0";
+it is intended to serve as a basis for implementations that evolve
+with the concept of CDDL 2.0.
 It is based on draft-bormann-cbor-cddl-freezer, but is more selective
 in what potential features it takes up and more detailed in their
 discussion.
-It is intended to serve as a basis for prototypical implementations of
-CDDL 2.0.
 This document is intended to evolve over time; it might spawn specific
-documents and then retire or eventually be published as a roadmap
+documents and then retire, or it might eventually be published as a roadmap
 document.
 
 --- middle
@@ -91,7 +96,7 @@ Introduction        {#intro}
 
 Note that the existing extension point can be exercised for new
 features in parallel to the work described here.
-One such draft, {{-more-controls}}, is planned to form the first set of
+{{-more-controls}} (recently approved, RFC-to-be 9741), forms part of the first set of
 specifications going forward from the CDDL-2 project together with {{-grammar}}.
 
 The rest of this introduction gives a rough overview over what could
@@ -108,16 +113,15 @@ CDDL 1.1 milestone (documents technically complete, implemented):
   Approved document, in RFC editor queue (EDIT state) at the time of writing.
 
 * Parallel to CDDL 1.1: More *control* operators
-  {{-more-controls}}: Additional control operators, another iteration
+  {{-more-controls}}, RFC-to-be 9741: Additional control operators, another iteration
   like RFC 9165 before.
-  Passed WGLC, to be submitted to IESG after a final chair check.
 
 CDDL 2.0 work:
 
 * Technically complete before **IETF 119**: CDDL 2.0: {{-modules}}
   (`import`/`include` directives, implemented).
   Feedback is available from IETF 119, one open technical issue
-  (sockets); WGLC before IETF 121.
+  (sockets); WGLC 1H2025.
 * Potentially, further directives to be added.
   No proposals are ripe for specification; this work could go into a
   second document constituting "CDDL 2.1" so we have the
@@ -125,7 +129,7 @@ CDDL 2.0 work:
 
 "CDDL 2.5":
 
-* Being prepared in **2024**: CDDL 2.5: {{anno}} of the present document
+* Being prepared in **1H2025**: CDDL 2.5: {{anno}} of the present document
   ("*annotations*", plus some functionality enabled by that).
   The requirements are reasonably well-understood;
   the specific form this takes needs to be worked out.
@@ -144,9 +148,10 @@ Not on the main line of development, but important ancillary work:
   (BCP for handling assigned numbers during draft stage; can stay
   informational as the work described is completed and any reference
   to the document erased before a specification using it would be published).
-* Application-oriented literal `e''` so diagnostic notation can refer
-  to named numbers that are specified in CDDL (makes use of {{-edn-literals}},
-  implemented, see {{enum-literals}} for an introduction).
+* Application-oriented literal `e''` {{-e-ref}} makes use of
+  {{-edn-literals}} so that diagnostic notation can refer
+  to named numbers that are specified in CDDL.
+  Implemented, see {{enum-literals}} for an introduction.
 
 More explorative at this point:
 
@@ -359,6 +364,8 @@ to `https://www.iana.org/assignments/cose/cose.xml`, plus some
 filtering on the records returned that only leaves actual allocations.
 {{Section 3.1 of -models}} contains an example of a CDDL module that is
 automatically generated from those assignments.
+(The code for this extraction is available in the document source
+repository of {{-models}} as {{EXTRACT-RB}}.)
 
 Additional functionality may be needed for filtering with respect to other
 columns of the registry record, e.g., `<capabilities>` in the case of
