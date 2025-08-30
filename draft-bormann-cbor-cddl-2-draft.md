@@ -39,7 +39,7 @@ informative:
   I-D.ietf-cbor-edn-literals: edn-literals
   I-D.ietf-cbor-edn-e-ref: e-ref
   RFC9682: grammar
-  I-D.ietf-cbor-cddl-more-control: more-controls
+  RFC9741: control2
   I-D.ietf-cbor-cddl-modules: modules
   I-D.bormann-cbor-rfc-cddl-models: models
   EXTRACT-RB:
@@ -66,8 +66,7 @@ informative:
 --- abstract
 
 The Concise Data Definition Language (CDDL) today is defined by
-RFC 8610, RFC 9165, RFC 9682, and draft-ietf-cbor-cddl-more-control
-(RFC-to-be 9741).
+RFC 8610, RFC 9165, RFC 9682, and RFC\ 9741).
 RFC 9165 and the latter (as well as some more application specific specifications
 such as RFC 9090) have used the extension point provided in RFC 8610,
 the control operator.
@@ -96,7 +95,7 @@ Introduction        {#intro}
 
 Note that the existing extension point can be exercised for new
 features in parallel to the work described here.
-{{-more-controls}} (recently approved, RFC-to-be 9741), forms part of the first set of
+{{-control2}} forms part of the first set of
 specifications going forward from the CDDL-2 project together with {{-grammar}}.
 
 The rest of this introduction gives a rough overview over what could
@@ -113,7 +112,7 @@ CDDL 1.1 milestone (documents technically complete, implemented):
   Approved document, in RFC editor queue (EDIT state) at the time of writing.
 
 * Parallel to CDDL 1.1: More *control* operators
-  {{-more-controls}}, RFC-to-be 9741: Additional control operators, another iteration
+  {{-control2}}: Additional control operators, another iteration
   like RFC 9165 before.
 
 CDDL 2.0 work:
