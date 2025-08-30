@@ -8,8 +8,7 @@
 <meta content="Carsten Bormann" name="author">
 <meta content='
        The Concise Data Definition Language (CDDL) today is defined by
-RFC 8610, RFC 9165, RFC 9682, and draft-ietf-cbor-cddl-more-control
-(RFC-to-be 9741).
+RFC 8610, RFC 9165, RFC 9682, and RFC\ 9741).
 RFC 9165 and the latter (as well as some more application specific specifications
 such as RFC 9090) have used the extension point provided in RFC 8610,
 the control operator. 
@@ -27,22 +26,22 @@ This document is intended to evolve over time; it might spawn specific
 documents and then retire, or it might eventually be published as a roadmap
 document. 
     ' name="description">
-<meta content="xml2rfc 3.27.0" name="generator">
+<meta content="xml2rfc 3.30.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-bormann-cbor-cddl-2-draft-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.27.0
-    Python 3.12.9
+  xml2rfc 3.30.0
+    Python 3.12.11
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
-    Jinja2 3.1.5
-    lxml 5.3.0
-    platformdirs 4.3.6
+    Jinja2 3.1.6
+    lxml 5.3.1
+    platformdirs 4.3.8
     pycountry 24.6.1
     PyYAML 6.0.2
-    requests 2.32.3
-    setuptools 70.3.0
+    requests 2.32.4
+    setuptools 80.9.0
     wcwidth 0.2.13
 -->
 <link href="draft-bormann-cbor-cddl-2-draft.xml" rel="alternate" type="application/rfc+xml">
@@ -1062,11 +1061,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">CDDL 2.0</td>
-<td class="right">February 2025</td>
+<td class="right">August 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann</td>
-<td class="center">Expires 1 September 2025</td>
+<td class="center">Expires 3 March 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1079,12 +1078,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-bormann-cbor-cddl-2-draft-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-02-28" class="published">28 February 2025</time>
+<time datetime="2025-08-30" class="published">30 August 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-09-01">1 September 2025</time></dd>
+<dd class="expires"><time datetime="2026-03-03">3 March 2026</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1098,8 +1097,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">The Concise Data Definition Language (CDDL) today is defined by
-RFC 8610, RFC 9165, RFC 9682, and draft-ietf-cbor-cddl-more-control
-(RFC-to-be 9741).
+RFC 8610, RFC 9165, RFC 9682, and RFC\ 9741).
 RFC 9165 and the latter (as well as some more application specific specifications
 such as RFC 9090) have used the extension point provided in RFC 8610,
 the control operator.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
@@ -1151,7 +1149,7 @@ document.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 1 September 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 3 March 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1275,7 +1273,7 @@ document.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
 <p id="section-1-1">(Please see abstract.)<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">Note that the existing extension point can be exercised for new
 features in parallel to the work described here.
-<span>[<a href="#I-D.ietf-cbor-cddl-more-control" class="cite xref">I-D.ietf-cbor-cddl-more-control</a>]</span> (recently approved, RFC-to-be 9741), forms part of the first set of
+<span>[<a href="#RFC9741" class="cite xref">RFC9741</a>]</span> forms part of the first set of
 specifications going forward from the CDDL-2 project together with <span>[<a href="#RFC9682" class="cite xref">RFC9682</a>]</span>.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">The rest of this introduction gives a rough overview over what could
 be the development plan for CDDL 1.1, 2.0, 2.5.<a href="#section-1-3" class="pilcrow">¶</a></p>
@@ -1294,7 +1292,7 @@ Approved document, in RFC editor queue (EDIT state) at the time of writing.<a hr
 </li>
           <li class="normal" id="section-1.1-3.2">
             <p id="section-1.1-3.2.1">Parallel to CDDL 1.1: More <em>control</em> operators
-<span>[<a href="#I-D.ietf-cbor-cddl-more-control" class="cite xref">I-D.ietf-cbor-cddl-more-control</a>]</span>, RFC-to-be 9741: Additional control operators, another iteration
+<span>[<a href="#RFC9741" class="cite xref">RFC9741</a>]</span>: Additional control operators, another iteration
 like RFC 9165 before.<a href="#section-1.1-3.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
@@ -1320,7 +1318,7 @@ well-understood <code>import</code>/<code>include</code> available now.<a href="
 ("<em>annotations</em>", plus some functionality enabled by that).
 The requirements are reasonably well-understood;
 the specific form this takes needs to be worked out.
-Enables, e.g., <span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-14#section-5" class="relref">Section 5</a> of [<a href="#I-D.bormann-cbor-cddl-freezer" class="cite xref">I-D.bormann-cbor-cddl-freezer</a>]</span> (co-occurrence).<a href="#section-1.1-7.1.1" class="pilcrow">¶</a></p>
+Enables, e.g., <span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-15#section-5" class="relref">Section 5</a> of [<a href="#I-D.bormann-cbor-cddl-freezer" class="cite xref">I-D.bormann-cbor-cddl-freezer</a>]</span> (co-occurrence).<a href="#section-1.1-7.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1333,7 +1331,7 @@ Enables, e.g., <span><a href="https://datatracker.ietf.org/doc/html/draft-borman
 <p id="section-1.2-1">Not on the main line of development, but important ancillary work:<a href="#section-1.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1.2-2.1">
-            <p id="section-1.2-2.1.1">(Informational, implemented): Section <span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-14#section-6" class="relref">6</a> (<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-14#section-6" class="relref">alternative representations</a>)</span> of <span>[<a href="#I-D.bormann-cbor-cddl-freezer" class="cite xref">I-D.bormann-cbor-cddl-freezer</a>]</span>:
+            <p id="section-1.2-2.1.1">(Informational, implemented): Section <span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-15#section-6" class="relref">6</a> (<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-15#section-6" class="relref">alternative representations</a>)</span> of <span>[<a href="#I-D.bormann-cbor-cddl-freezer" class="cite xref">I-D.bormann-cbor-cddl-freezer</a>]</span>:
 CDDL-in-JSON format(s) for interchange of CDDL model information
 between tools.<a href="#section-1.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
@@ -1454,7 +1452,7 @@ augmented, not changed, by the process.)<a href="#section-3.1-1" class="pilcrow"
 <p id="section-3.1-2">Annotations could in turn provide input to further validation steps,
 as is often done with Schematron validation in Relax-NG; with an
 appropriate evaluation language this can be used for checking co-occurrence
-constraints (<span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-14#section-5" class="relref">Section 5</a> of [<a href="#I-D.bormann-cbor-cddl-freezer" class="cite xref">I-D.bormann-cbor-cddl-freezer</a>]</span>).<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+constraints (<span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-15#section-5" class="relref">Section 5</a> of [<a href="#I-D.bormann-cbor-cddl-freezer" class="cite xref">I-D.bormann-cbor-cddl-freezer</a>]</span>).<a href="#section-3.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="transformation">
@@ -1569,43 +1567,39 @@ available for ABNF as well.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 <dd class="break"></dd>
 <dt id="I-D.bormann-cbor-cddl-csv">[I-D.bormann-cbor-cddl-csv]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">H. Birkholz</span>, <span class="refTitle">"Using CDDL for CSVs"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-cddl-csv-05</span>, <time datetime="2024-06-16" class="refDate">16 June 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-csv-05">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-csv-05</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">H. Birkholz</span>, <span class="refTitle">"Using CDDL for CSVs"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-cddl-csv-06</span>, <time datetime="2025-03-03" class="refDate">3 March 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-csv-06">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-csv-06</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.bormann-cbor-cddl-freezer">[I-D.bormann-cbor-cddl-freezer]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"A feature freezer for the Concise Data Definition Language (CDDL)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-cddl-freezer-14</span>, <time datetime="2024-08-28" class="refDate">28 August 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-14">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-14</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"A feature freezer for the Concise Data Definition Language (CDDL)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-cddl-freezer-15</span>, <time datetime="2025-02-28" class="refDate">28 February 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-15">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-15</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.bormann-cbor-draft-numbers">[I-D.bormann-cbor-draft-numbers]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Managing CBOR codepoints in Internet-Drafts"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-draft-numbers-04</span>, <time datetime="2024-08-29" class="refDate">29 August 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-draft-numbers-04">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-draft-numbers-04</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Managing CBOR codepoints in Internet-Drafts"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-draft-numbers-06</span>, <time datetime="2025-07-07" class="refDate">7 July 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-draft-numbers-06">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-draft-numbers-06</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.bormann-cbor-rfc-cddl-models">[I-D.bormann-cbor-rfc-cddl-models]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CDDL models for some existing RFCs"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-rfc-cddl-models-05</span>, <time datetime="2025-02-23" class="refDate">23 February 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-rfc-cddl-models-05">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-rfc-cddl-models-05</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CDDL models for some existing RFCs"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-rfc-cddl-models-06</span>, <time datetime="2025-08-29" class="refDate">29 August 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-rfc-cddl-models-06">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-rfc-cddl-models-06</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-cddl-modules">[I-D.ietf-cbor-cddl-modules]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">B. Moran</span>, <span class="refTitle">"CDDL Module Structure"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-cddl-modules-03</span>, <time datetime="2024-09-01" class="refDate">1 September 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-modules-03">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-modules-03</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="I-D.ietf-cbor-cddl-more-control">[I-D.ietf-cbor-cddl-more-control]</dt>
-        <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Concise Data Definition Language (CDDL): Additional Control Operators for the Conversion and Processing of Text"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-cddl-more-control-08</span>, <time datetime="2025-01-09" class="refDate">9 January 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-more-control-08">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-more-control-08</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">B. Moran</span>, <span class="refTitle">"CDDL Module Structure"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-cddl-modules-04</span>, <time datetime="2025-03-03" class="refDate">3 March 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-modules-04">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-modules-04</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-cde">[I-D.ietf-cbor-cde]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CBOR Common Deterministic Encoding (CDE)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-cde-08</span>, <time datetime="2025-02-10" class="refDate">10 February 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cde-08">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cde-08</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CBOR Common Deterministic Encoding (CDE)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-cde-12</span>, <time datetime="2025-07-07" class="refDate">7 July 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cde-12">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cde-12</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-edn-e-ref">[I-D.ietf-cbor-edn-e-ref]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"External References to Values in CBOR Diagnostic Notation (EDN)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-e-ref-01</span>, <time datetime="2024-12-29" class="refDate">29 December 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-e-ref-01">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-e-ref-01</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"External References to Values in CBOR Diagnostic Notation (EDN)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-e-ref-02</span>, <time datetime="2025-07-02" class="refDate">2 July 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-e-ref-02">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-e-ref-02</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-edn-literals">[I-D.ietf-cbor-edn-literals]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CBOR Extended Diagnostic Notation (EDN)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-literals-16</span>, <time datetime="2025-01-08" class="refDate">8 January 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-16">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-16</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CBOR Extended Diagnostic Notation (EDN)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-literals-18</span>, <time datetime="2025-07-07" class="refDate">7 July 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-18">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-18</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-packed">[I-D.ietf-cbor-packed]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">M. Gütschow</span>, <span class="refTitle">"Packed CBOR"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-packed-13</span>, <time datetime="2024-09-01" class="refDate">1 September 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-packed-13">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-packed-13</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">M. Gütschow</span>, <span class="refTitle">"Packed CBOR"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-packed-16</span>, <time datetime="2025-07-07" class="refDate">7 July 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-packed-16">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-packed-16</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="PSVI">[PSVI]</dt>
         <dd>
@@ -1614,6 +1608,10 @@ available for ABNF as well.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 <dt id="RFC9682">[RFC9682]</dt>
         <dd>
 <span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Updates to the Concise Data Definition Language (CDDL) Grammar"</span>, <span class="seriesInfo">RFC 9682</span>, <span class="seriesInfo">DOI 10.17487/RFC9682</span>, <time datetime="2024-11" class="refDate">November 2024</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9682">https://www.rfc-editor.org/rfc/rfc9682</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9741">[RFC9741]</dt>
+        <dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Concise Data Definition Language (CDDL): Additional Control Operators for the Conversion and Processing of Text"</span>, <span class="seriesInfo">RFC 9741</span>, <span class="seriesInfo">DOI 10.17487/RFC9741</span>, <time datetime="2025-03" class="refDate">March 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9741">https://www.rfc-editor.org/rfc/rfc9741</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="useful">[useful]</dt>
       <dd>
@@ -1710,7 +1708,7 @@ would come from applying the XPath expression<a href="#appendix-A.2.1-5" class="
 </div>
 <p id="appendix-A.2.1-7">to <code>https://www.iana.org/assignments/cose/cose.xml</code>, plus some
 filtering on the records returned that only leaves actual allocations.
-<span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-rfc-cddl-models-05#section-3.1" class="relref">Section 3.1</a> of [<a href="#I-D.bormann-cbor-rfc-cddl-models" class="cite xref">I-D.bormann-cbor-rfc-cddl-models</a>]</span> contains an example of a CDDL module that is
+<span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-rfc-cddl-models-06#section-3.1" class="relref">Section 3.1</a> of [<a href="#I-D.bormann-cbor-rfc-cddl-models" class="cite xref">I-D.bormann-cbor-rfc-cddl-models</a>]</span> contains an example of a CDDL module that is
 automatically generated from those assignments.
 (The code for this extraction is available in the document source
 repository of <span>[<a href="#I-D.bormann-cbor-rfc-cddl-models" class="cite xref">I-D.bormann-cbor-rfc-cddl-models</a>]</span> as <span>[<a href="#EXTRACT-RB" class="cite xref">EXTRACT-RB</a>]</span>.)<a href="#appendix-A.2.1-7" class="pilcrow">¶</a></p>
