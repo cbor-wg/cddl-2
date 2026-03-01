@@ -49,6 +49,7 @@ informative:
   I-D.bormann-cbor-cddl-csv: cddl-csv
   I-D.ietf-cbor-packed: packed
   I-D.ietf-cbor-cde: cde
+  I-D.bormann-cbor-edn-mapkey: mapkey
   enum-literals:
     target: https://mailarchive.ietf.org/arch/msg/cbor/D8h_0Egog89GaRLFNwb1VfKlHI4
     title: >
@@ -66,7 +67,7 @@ informative:
 --- abstract
 
 The Concise Data Definition Language (CDDL) today is defined by
-RFC 8610, RFC 9165, RFC 9682, and RFC\ 9741).
+RFC 8610, RFC 9165, RFC 9682, and RFC 9741).
 RFC 9165 and the latter (as well as some more application specific specifications
 such as RFC 9090) have used the extension point provided in RFC 8610,
 the control operator.
@@ -103,32 +104,29 @@ be the development plan for CDDL 1.1, 2.0, 2.5.
 
 ## CDDL 1.1 + 2 plan (standards track) {#s11}
 
-This section documents the status in Summer 2024.
+This section is completed.
 
-CDDL 1.1 milestone (documents technically complete, implemented):
+CDDL 1.1 milestone
 
 * "CDDL 1.1": {{-grammar}}, *Grammar* fixes:
   Empty files (enabling CDDL 2), non-literal tags, errata fixes.
-  Approved document, in RFC editor queue (EDIT state) at the time of writing.
 
 * Parallel to CDDL 1.1: More *control* operators
   {{-control2}}: Additional control operators, another iteration
-  like RFC 9165 before.
+  like {{-control1}} before.
 
 CDDL 2.0 work:
 
 * Technically complete before **IETF 119**: CDDL 2.0: {{-modules}}
   (`import`/`include` directives, implemented).
-  Feedback is available from IETF 119, one open technical issue
-  (sockets); WGLC 1H2025.
+  Feedback is available from IETF 119, one remaining technical issue
+  (sockets).
 * Potentially, further directives to be added.
-  No proposals are ripe for specification; this work could go into a
-  second document constituting "CDDL 2.1" so we have the
-  well-understood `import`/`include` available now.
+  No proposals are ripe for specification.
 
 "CDDL 2.5":
 
-* Being prepared in **1H2025**: CDDL 2.5: {{anno}} of the present document
+* Being prepared: CDDL 2.5: {{anno}} of the present document
   ("*annotations*", plus some functionality enabled by that).
   The requirements are reasonably well-understood;
   the specific form this takes needs to be worked out.
@@ -151,6 +149,8 @@ Not on the main line of development, but important ancillary work:
   {{-edn-literals}} so that diagnostic notation can refer
   to named numbers that are specified in CDDL.
   Implemented, see {{enum-literals}} for an introduction.
+* Further proposals to improve the integration between CDDL and EDN
+  are likely; see {{-mapkey}} for a work in progress.
 
 More explorative at this point:
 
