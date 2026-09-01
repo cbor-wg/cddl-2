@@ -62,6 +62,7 @@ informative:
     target: https://www.w3.org/XML/2002/05/psvi-use-cases
     date: 2002-06-24
     title: Use Cases for XML Schema PSVI API
+  I-D.ietf-cbor-serialization: ser
 
 
 --- abstract
@@ -228,6 +229,11 @@ Annotations could in turn provide input to further validation steps,
 as is often done with Schematron validation in Relax-NG; with an
 appropriate evaluation language this can be used for checking co-occurrence
 constraints ({{Section 5 of -freezer}}).
+
+One aspect of validation that is currently not covered by CDDL is the
+checking of specific serialization requirements.
+{{Section 8 of -ser}} can be used as a source of inspiration for how
+this could be immediately useful.
 
 Transformation
 --------------
