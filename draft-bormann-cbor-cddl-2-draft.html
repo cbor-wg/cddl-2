@@ -8,7 +8,7 @@
 <meta content="Carsten Bormann" name="author">
 <meta content='
        The Concise Data Definition Language (CDDL) today is defined by
-RFC 8610, RFC 9165, RFC 9682, and RFC\ 9741).
+RFC 8610, RFC 9165, RFC 9682, and RFC 9741).
 RFC 9165 and the latter (as well as some more application specific specifications
 such as RFC 9090) have used the extension point provided in RFC 8610,
 the control operator. 
@@ -26,23 +26,23 @@ This document is intended to evolve over time; it might spawn specific
 documents and then retire, or it might eventually be published as a roadmap
 document. 
     ' name="description">
-<meta content="xml2rfc 3.30.0" name="generator">
+<meta content="xml2rfc 3.34.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-bormann-cbor-cddl-2-draft-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.30.0
-    Python 3.12.11
-    ConfigArgParse 1.7
+  xml2rfc 3.34.0
+    Python 3.14.7
+    ConfigArgParse 1.7.5
     google-i18n-address 3.1.1
-    intervaltree 3.1.0
+    intervaltree 3.2.1
     Jinja2 3.1.6
-    lxml 5.3.1
-    platformdirs 4.3.8
+    lxml 6.1.1
+    natsort 8.4.0
+    platformdirs 4.11.5
     pycountry 24.6.1
-    PyYAML 6.0.2
-    requests 2.32.4
-    setuptools 80.9.0
-    wcwidth 0.2.13
+    PyYAML 6.0.3
+    requests 2.33.1
+    wcwidth 0.8.2
 -->
 <link href="draft-bormann-cbor-cddl-2-draft.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -78,7 +78,6 @@ document.
   src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin-ext.woff2') format('woff2');
   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
-
 @font-face {
   font-family: 'Lora';
   font-style: italic;
@@ -127,7 +126,6 @@ document.
   src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-
 @font-face {
   font-family: 'Lora';
   font-style: normal;
@@ -183,7 +181,7 @@ document.
   font-weight: 400;
   font-display: swap;
   src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
   font-family: 'Oxygen Mono';
@@ -191,7 +189,7 @@ document.
   font-weight: 400;
   font-display: swap;
   src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @font-face {
@@ -308,16 +306,19 @@ h1, h2, h3, h4, h5, h6 {
   font-size-adjust: 0.5;
   color: var(--title-color);
 }
-h1#title {
-  font-size: 32px;
-  line-height: 40px;
-  clear: both;
-}
-h1#title, h1#rfcnum {
-  margin: 1.5em 0 0.2em;
-}
-h1#rfcnum + h1#title {
-  margin: 0.2em 0;
+h1 {
+  &#title {
+    font-size: 32px;
+    line-height: 40px;
+    clear: both;
+    margin: 1.5em 0 0.2em;
+  }
+  &#rfcnum {
+    margin: 1.5em 0 0.2em;
+    & + h1#title {
+      margin: 0.2em 0;
+    }
+  }
 }
 
 h1, h2, h3 {
@@ -337,10 +338,10 @@ h4, h5, h6 {
 #abstract+p {
   font-size: 18px;
   line-height: 24px;
-}
-#abstract+p code, #abstract+p samp, #abstract+p tt {
-  font-size: 16px;
-  line-height: 0;
+  & code, & samp, & tt {
+    font-size: 16px;
+    line-height: 0;
+  }
 }
 
 p {
@@ -351,59 +352,59 @@ p {
 div {
   margin: 0;
 }
-.alignRight.art-text {
-  background-color: var(--highlight-color);
-  border: 1px solid var(--line-color);
-  border-radius: 3px;
-  padding: 0.5em 1em 0;
-  margin-bottom: 0.5em;
-}
-.alignRight.art-text pre {
-  padding: 0;
-  width: auto;
-}
 .alignRight {
   margin: 1em 0;
-}
-.alignRight > *:first-child {
-  border: none;
-  margin: 0;
-  float: right;
-  clear: both;
-}
-.alignRight > *:nth-child(2) {
-  clear: both;
-  display: block;
-  border: none;
+  &.art-text {
+    background-color: var(--highlight-color);
+    border: 1px solid var(--line-color);
+    border-radius: 3px;
+    padding: 0.5em 1em 0;
+    margin-bottom: 0.5em;
+    & pre {
+      padding: 0;
+      width: auto;
+    }
+  }
+  & > *:first-child {
+    border: none;
+    margin: 0;
+    float: right;
+    clear: both;
+  }
+  & > *:nth-child(2) {
+    clear: both;
+    display: block;
+    border: none;
+  }
 }
 svg {
   display: block;
-}
-/* font-family isn't space-separated, but =~ will have to do */
-svg[font-family~="monospace" i], svg [font-family~="monospace" i] {
-  font-family: var(--font-mono);
-}
-.alignCenter.art-text {
-  background-color: var(--highlight-color);
-  border: 1px solid var(--line-color);
-  border-radius: 3px;
-  padding: 0.5em 1em 0;
-  margin-bottom: 0.5em;
-}
-.alignCenter.art-text pre {
-  padding: 0;
-  width: auto;
+  /* font-family isn't space-separated, but =~ will have to do */
+  &[font-family~="monospace" i], & [font-family~="monospace" i] {
+    font-family: var(--font-mono);
+  }
 }
 .alignCenter {
   margin: 1em 0;
-}
-.alignCenter > *:first-child {
-  border: none;
-  /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
-     support flexbox yet.
-  */
-  display: table;
-  margin: 0 auto;
+  &.art-text {
+    background-color: var(--highlight-color);
+    border: 1px solid var(--line-color);
+    border-radius: 3px;
+    padding: 0.5em 1em 0;
+    margin-bottom: 0.5em;
+    & pre {
+      padding: 0;
+      width: auto;
+    }
+  }
+  & > *:first-child {
+    border: none;
+    /* this isn't optimal, but it's an existence proof.  PrinceXML doesn't
+       support flexbox yet.
+    */
+    display: table;
+    margin: 0 auto;
+  }
 }
 
 /* lists */
@@ -441,26 +442,25 @@ dl {
     --indent: 5ch;
     & > dt {
       min-width: calc(var(--indent) - 2ch);
+      float: none;
     }
-  }
-  &.olPercent > dt {
-    float: none;
   }
 
   dl > dd > & {
     margin-top: 0.5em;
     margin-bottom: 0;
   }
-}
-dl:not(.dlNewline) > dt {
-  float: left;
-  margin-right: 2ch;
-  min-width: 8ch;
-}
-dl > dd {
-  margin-bottom: .8em;
-  margin-left: var(--indent) !important; /* stupid element overrides */
-  min-height: 2ex;
+
+  &:not(.dlNewline) > dt {
+    float: left;
+    margin-right: 2ch;
+    min-width: 8ch;
+  }
+  & > dd {
+    margin-bottom: .8em;
+    margin-left: var(--indent) !important; /* stupid element overrides */
+    min-height: 2ex;
+  }
 }
 :is(dl.compact, .dlCompact) > dd {
   margin-bottom: 0;
@@ -476,20 +476,22 @@ dl > dd {
 }
 
 /* links */
-a, a[href].selfRef:hover {
+a {
   text-decoration: none;
+  &[href] {
+    color: var(--link-color);
+    &:hover { text-decoration: underline; }
+    &.selfRef {
+      color: var(--text-color);
+      &:hover {
+        text-decoration: none;
+        background-color: var(--highlight-color);
+      }
+    }
+  }
 }
-a[href] {
-  color: var(--link-color);
-}
-a[href].selfRef, .iref + a[href].internal {
+.iref + a[href].internal {
   color: var(--text-color);
-}
-a[href]:hover {
-  text-decoration: underline;
-}
-a[href].selfRef:hover {
-  background-color: var(--highlight-color);
 }
 a.xref:is(.cite, .auto), :is(#status-of-memo, #copyright) a {
   white-space: nowrap;
@@ -525,9 +527,9 @@ img {
 figure {
   margin: 0.5em 0;
   padding: 0;
-}
-figure blockquote {
-  margin: 0.8em 0.4em 0.4em;
+  & blockquote {
+    margin: 0.8em 0.4em 0.4em;
+  }
 }
 figcaption, caption {
   font-style: italic;
@@ -537,17 +539,19 @@ figcaption, caption {
 }
 @media screen {
   /* Auto-collapse boilerplate. */
-  :is(#status-of-memo, #copyright) p {
-    margin: -2px 0;
-    max-height: 0;
-    transition: max-height 2s ease, margin 0.5s ease 0.5s;
-    overflow: hidden;
-  }
-  :is(#status-of-memo, #copyright):hover p,
-  :is(#status-of-memo, #copyright) h2:target ~ p {
-    margin: 0.5em 0;
-    max-height: 500px;
-    overflow: auto;
+  :is(#status-of-memo, #copyright) {
+    & p {
+      margin: -2px 0;
+      max-height: 0;
+      transition: max-height 2s ease, margin 0.5s ease 0.5s;
+      overflow: hidden;
+    }
+    &:hover p,
+    & h2:target ~ p {
+      margin: 0.5em 0;
+      max-height: 500px;
+      overflow: auto;
+    }
   }
   pre, svg {
     display: inline-block;
@@ -583,6 +587,7 @@ aside, blockquote {
 }
 blockquote {
   margin: 1em 0;
+  border-left: 2px var(--pilcrow-strong) solid;
 }
 cite {
   display: block;
@@ -596,25 +601,17 @@ table {
   max-width: 100%;
   margin: 0 0 1em;
   border-collapse: collapse;
-}
-table.right {
-  margin-left: auto;
-}
-table.center {
-  margin-left: auto;
-  margin-right: auto;
-}
-table.left {
-  margin-right: auto;
-}
-table .text-left {
-  text-align: left;
-}
-table .text-center {
-  text-align: center;
-}
-table .text-right {
-  text-align: right;
+  &.right { margin-left: auto; }
+  &.center { margin-left: auto; margin-right: auto; }
+  &.left { margin-right: auto; }
+  & .text-left { text-align: left; }
+  & .text-center { text-align: center; }
+  & .text-right { text-align: right; }
+  & caption {
+    margin: 0;
+    padding: 3px 0 3px 1em;
+  }
+  & p { margin: 0; }
 }
 
 thead, tbody {
@@ -634,13 +631,6 @@ th {
 :is(tr:nth-child(2n+1), thead+tbody > tr:nth-child(2n)) > td {
   background-color: var(--highlight-color);
 }
-table caption {
-  margin: 0;
-  padding: 3px 0 3px 1em;
-}
-table p {
-  margin: 0;
-}
 
 /* pilcrow */
 a.pilcrow {
@@ -651,18 +641,16 @@ a.pilcrow {
     color: var(--pilcrow-weak);
     &:hover { text-decoration: none; }
   }
-}
-@media not print {
-  :hover > a.pilcrow {
-    opacity: 1;
+  @media not print {
+    :hover > &, &:focus {
+      opacity: 1;
+    }
+    &[href]:hover {
+      color: var(--pilcrow-strong);
+      background-color: transparent;
+    }
   }
-  a.pilcrow[href]:hover {
-    color: var(--pilcrow-strong);
-    background-color: transparent;
-  }
-}
-@media print {
-  a.pilcrow {
+  @media print {
     display: none;
   }
 }
@@ -721,9 +709,9 @@ sub, sup {
   font-size: 0.9em;
   font-style: italic;
   margin-top: 2em;
-}
-.docInfo .prepared {
-  float: right;
+  & .prepared {
+    float: right;
+  }
 }
 
 /* table of contents */
@@ -813,23 +801,27 @@ hr.addr {
   max-width: calc(100% - 16px);
 }
 @media (min-width: 500px) {
-  #authors-addresses > section {
-    column-count: 2;
-    column-gap: 20px;
-  }
-  #authors-addresses > section > h2 {
-    column-span: all;
-  }
-  /* hack for break-inside: avoid-column */
-  #authors-addresses address {
-    display: inline-block;
-    break-inside: avoid-column;
+  #authors-addresses {
+    & > section {
+      column-count: 2;
+      column-gap: 20px;
+    }
+    & > section > h2 {
+      column-span: all;
+    }
+    /* hack for break-inside: avoid-column */
+    & address {
+      display: inline-block;
+      break-inside: avoid-column;
+    }
   }
 }
 
 /* Comments */
-.rfcEditorRemove p:first-of-type {
-  font-style: italic;
+.rfcEditorRemove {
+  & p:first-of-type {
+    font-style: italic;
+  }
 }
 .cref {
   background-color: rgba(249, 232, 105, 0.3);
@@ -840,19 +832,21 @@ hr.addr {
 }
 
 @media screen {
-  #toc nav {
-    font-family: var(--font-title);
-    font-weight: 360;
-    & > ul { margin-bottom: 2em; }
-    & ul {
-      margin: 0 0 0 4px;
-      & :is(p, li) {
-        margin: 2px 0;
+  #toc {
+    & nav {
+      font-family: var(--font-title);
+      font-weight: 360;
+      & > ul { margin-bottom: 2em; }
+      & ul {
+        margin: 0 0 0 4px;
+        & :is(p, li) {
+          margin: 2px 0;
+        }
       }
     }
-  }
-  #toc a.toplink {
-    float: right;
+    & a.toplink {
+      float: right;
+    }
   }
 }
 @media not screen {
@@ -873,54 +867,54 @@ hr.addr {
     margin: 0;
     border-bottom: 1px solid #ccc;
     opacity: 0.6;
-  }
-  #toc h2 {
-    margin: 0;
-    padding: 2px 0 2px 6px;
-    padding-right: 1em;
-    font-size: 18px;
-    line-height: 24px;
-    min-width: 190px;
-    text-align: right;
-    background-color: #444;
-    color: white;
-    cursor: pointer;
-    &::before { /* css hamburger */
-      float: right;
-      position: relative;
-      width: 1em;
-      height: 1px;
-      left: -164px;
-      margin: 8px 0 0 0;
-      background: white none repeat scroll 0 0;
-      box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
-      content: "";
+    & h2 {
+      margin: 0;
+      padding: 2px 0 2px 6px;
+      padding-right: 1em;
+      font-size: 18px;
+      line-height: 24px;
+      min-width: 190px;
+      text-align: right;
+      background-color: #444;
+      color: white;
+      cursor: pointer;
+      &::before { /* css hamburger */
+        float: right;
+        position: relative;
+        width: 1em;
+        height: 1px;
+        left: -164px;
+        margin: 8px 0 0 0;
+        background: white none repeat scroll 0 0;
+        box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+        content: "";
+      }
     }
-  }
-  #toc nav {
-    display: none;
-    background-color: var(--background-color);
-    padding: 0.5em 1em 1em;
-    overflow: auto;
-    overscroll-behavior: contain;
-    height: calc(100vh - 48px);
-    border-left: 1px solid #ddd;
-  }
-  #toc.active {
-    opacity: 1;
-    & nav { display: block; }
-  }
-  /* Make the collapsed ToC header render white on gray also when it's a link */
-  #toc h2 a,
-  #toc h2 a:is(:link, :focus, :hover),
-  #toc a.toplink,
-  #toc a.toplink:hover {
-    color: white;
-    background-color: #444;
-    text-decoration: none;
-  }
-  #toc a.toplink {
-    margin: 2px 0.5em 0;
+    & nav {
+      display: none;
+      background-color: var(--background-color);
+      padding: 0.5em 1em 1em;
+      overflow: auto;
+      overscroll-behavior: contain;
+      height: calc(100vh - 48px);
+      border-left: 1px solid #ddd;
+    }
+    &.active {
+      opacity: 1;
+      & nav { display: block; }
+    }
+    /* Make the collapsed ToC header render white on gray also when it's a link */
+    & h2 a,
+    & h2 a:is(:link, :focus, :hover),
+    & a.toplink,
+    & a.toplink:hover {
+      color: white;
+      background-color: #444;
+      text-decoration: none;
+    }
+    & a.toplink {
+      margin: 2px 0.5em 0;
+    }
   }
 }
 
@@ -939,26 +933,26 @@ hr.addr {
     margin: 0;
     padding: 0;
     z-index: 1;
-  }
-  #toc h2 {
-    margin: 0;
-    padding: 0.25em 1em 1em 0;
-  }
-  #toc nav {
-    display: block;
-    height: calc(90vh - 84px);
-    bottom: 0;
-    padding: 0.5em 0 2em;
-    overflow: auto;
-    overscroll-behavior: contain;
-    scrollbar-width: thin;
+    & h2 {
+      margin: 0;
+      padding: 0.25em 1em 1em 0;
+    }
+    & nav {
+      display: block;
+      height: calc(90vh - 84px);
+      bottom: 0;
+      padding: 0.5em 0 2em;
+      overflow: auto;
+      overscroll-behavior: contain;
+      scrollbar-width: thin;
+    }
+    & a.toplink {
+      margin: 8px 0.5em 0;
+    }
   }
   img { /* future proofing */
     max-width: 100%;
     height: auto;
-  }
-  #toc a.toplink {
-    margin: 8px 0.5em 0;
   }
 }
 
@@ -974,12 +968,13 @@ hr.addr {
   #n-copyright-notice {
     border-bottom: none;
   }
-  #toc, #n-introduction {
-    page-break-before: always;
-  }
   #toc {
+    page-break-before: always;
     border-top: none;
     padding-top: 0;
+  }
+  #n-introduction {
+    page-break-before: always;
   }
   figure, pre, .vcard {
     page-break-inside: avoid;
@@ -1041,17 +1036,19 @@ hr.addr {
 }
 
 /* SVG Trick: a prefix match works because only black and white are allowed */
-svg :is([stroke="black"], [stroke^="#000"]) {
-  stroke: var(--text-color);
-}
-svg :is([stroke="white"], [stroke^="#fff"]) {
-  stroke: var(--background-color);
-}
-svg :is([fill="black"], [fill^="#000"], :not([fill])) {
-  fill: var(--text-color);
-}
-svg :is([fill="white"], [fill^="#fff"]) {
-  fill: var(--background-color);
+svg {
+  & :is([stroke="black"], [stroke^="#000"]) {
+    stroke: var(--text-color);
+  }
+  & :is([stroke="white"], [stroke^="#fff"]) {
+    stroke: var(--background-color);
+  }
+  & :is([fill="black"], [fill^="#000"], :not([fill])) {
+    fill: var(--text-color);
+  }
+  & :is([fill="white"], [fill^="#fff"]) {
+    fill: var(--background-color);
+  }
 }
 </style>
 
@@ -1061,11 +1058,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">CDDL 2.0</td>
-<td class="right">August 2025</td>
+<td class="right">September 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Bormann</td>
-<td class="center">Expires 3 March 2026</td>
+<td class="center">Expires 5 March 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1078,12 +1075,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-bormann-cbor-cddl-2-draft-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-08-30" class="published">30 August 2025</time>
+<time datetime="2026-09-01" class="published">1 September 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-03-03">3 March 2026</time></dd>
+<dd class="expires"><time datetime="2027-03-05">5 March 2027</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1097,7 +1094,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">The Concise Data Definition Language (CDDL) today is defined by
-RFC 8610, RFC 9165, RFC 9682, and RFC\ 9741).
+RFC 8610, RFC 9165, RFC 9682, and RFC 9741).
 RFC 9165 and the latter (as well as some more application specific specifications
 such as RFC 9090) have used the extension point provided in RFC 8610,
 the control operator.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
@@ -1149,7 +1146,7 @@ document.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 3 March 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 5 March 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1158,7 +1155,7 @@ document.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
 <a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
         </h2>
 <p id="section-boilerplate.2-1">
-            Copyright (c) 2025 IETF Trust and the persons identified as the
+            Copyright (c) 2026 IETF Trust and the persons identified as the
             document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.2-2">
             This document is subject to BCP 78 and the IETF Trust's Legal
@@ -1282,18 +1279,17 @@ be the development plan for CDDL 1.1, 2.0, 2.5.<a href="#section-1-3" class="pil
         <h3 id="name-cddl-11-2-plan-standards-tr">
 <a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-cddl-11-2-plan-standards-tr" class="section-name selfRef">CDDL 1.1 + 2 plan (standards track)</a>
         </h3>
-<p id="section-1.1-1">This section documents the status in Summer 2024.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
-<p id="section-1.1-2">CDDL 1.1 milestone (documents technically complete, implemented):<a href="#section-1.1-2" class="pilcrow">¶</a></p>
+<p id="section-1.1-1">This section is completed.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.1-2">CDDL 1.1 milestone<a href="#section-1.1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1.1-3.1">
             <p id="section-1.1-3.1.1">"CDDL 1.1": <span>[<a href="#RFC9682" class="cite xref">RFC9682</a>]</span>, <em>Grammar</em> fixes:
-Empty files (enabling CDDL 2), non-literal tags, errata fixes.
-Approved document, in RFC editor queue (EDIT state) at the time of writing.<a href="#section-1.1-3.1.1" class="pilcrow">¶</a></p>
+Empty files (enabling CDDL 2), non-literal tags, errata fixes.<a href="#section-1.1-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-1.1-3.2">
             <p id="section-1.1-3.2.1">Parallel to CDDL 1.1: More <em>control</em> operators
 <span>[<a href="#RFC9741" class="cite xref">RFC9741</a>]</span>: Additional control operators, another iteration
-like RFC 9165 before.<a href="#section-1.1-3.2.1" class="pilcrow">¶</a></p>
+like <span>[<a href="#RFC9165" class="cite xref">RFC9165</a>]</span> before.<a href="#section-1.1-3.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-1.1-4">CDDL 2.0 work:<a href="#section-1.1-4" class="pilcrow">¶</a></p>
@@ -1301,24 +1297,22 @@ like RFC 9165 before.<a href="#section-1.1-3.2.1" class="pilcrow">¶</a></p>
 <li class="normal" id="section-1.1-5.1">
             <p id="section-1.1-5.1.1">Technically complete before <strong>IETF 119</strong>: CDDL 2.0: <span>[<a href="#I-D.ietf-cbor-cddl-modules" class="cite xref">I-D.ietf-cbor-cddl-modules</a>]</span>
 (<code>import</code>/<code>include</code> directives, implemented).
-Feedback is available from IETF 119, one open technical issue
-(sockets); WGLC 1H2025.<a href="#section-1.1-5.1.1" class="pilcrow">¶</a></p>
+Feedback is available from IETF 119, one remaining technical issue
+(sockets).<a href="#section-1.1-5.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-1.1-5.2">
             <p id="section-1.1-5.2.1">Potentially, further directives to be added.
-No proposals are ripe for specification; this work could go into a
-second document constituting "CDDL 2.1" so we have the
-well-understood <code>import</code>/<code>include</code> available now.<a href="#section-1.1-5.2.1" class="pilcrow">¶</a></p>
+No proposals are ripe for specification.<a href="#section-1.1-5.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-1.1-6">"CDDL 2.5":<a href="#section-1.1-6" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1.1-7.1">
-            <p id="section-1.1-7.1.1">Being prepared in <strong>1H2025</strong>: CDDL 2.5: <a href="#anno" class="auto internal xref">Section 3</a> of the present document
+            <p id="section-1.1-7.1.1">Being prepared: CDDL 2.5: <a href="#anno" class="auto internal xref">Section 3</a> of the present document
 ("<em>annotations</em>", plus some functionality enabled by that).
 The requirements are reasonably well-understood;
 the specific form this takes needs to be worked out.
-Enables, e.g., <span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-15#section-5" class="relref">Section 5</a> of [<a href="#I-D.bormann-cbor-cddl-freezer" class="cite xref">I-D.bormann-cbor-cddl-freezer</a>]</span> (co-occurrence).<a href="#section-1.1-7.1.1" class="pilcrow">¶</a></p>
+Enables, e.g., <span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-17#section-5" class="relref">Section 5</a> of [<a href="#I-D.bormann-cbor-cddl-freezer" class="cite xref">I-D.bormann-cbor-cddl-freezer</a>]</span> (co-occurrence).<a href="#section-1.1-7.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1331,7 +1325,7 @@ Enables, e.g., <span><a href="https://datatracker.ietf.org/doc/html/draft-borman
 <p id="section-1.2-1">Not on the main line of development, but important ancillary work:<a href="#section-1.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1.2-2.1">
-            <p id="section-1.2-2.1.1">(Informational, implemented): Section <span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-15#section-6" class="relref">6</a> (<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-15#section-6" class="relref">alternative representations</a>)</span> of <span>[<a href="#I-D.bormann-cbor-cddl-freezer" class="cite xref">I-D.bormann-cbor-cddl-freezer</a>]</span>:
+            <p id="section-1.2-2.1.1">(Informational, implemented): Section <span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-17#section-6" class="relref">6</a> (<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-17#section-6" class="relref">alternative representations</a>)</span> of <span>[<a href="#I-D.bormann-cbor-cddl-freezer" class="cite xref">I-D.bormann-cbor-cddl-freezer</a>]</span>:
 CDDL-in-JSON format(s) for interchange of CDDL model information
 between tools.<a href="#section-1.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
@@ -1350,6 +1344,10 @@ to the document erased before a specification using it would be published).<a hr
 <span>[<a href="#I-D.ietf-cbor-edn-literals" class="cite xref">I-D.ietf-cbor-edn-literals</a>]</span> so that diagnostic notation can refer
 to named numbers that are specified in CDDL.
 Implemented, see <span>[<a href="#enum-literals" class="cite xref">enum-literals</a>]</span> for an introduction.<a href="#section-1.2-2.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.2-2.5">
+            <p id="section-1.2-2.5.1">Further proposals to improve the integration between CDDL and EDN
+are likely; see <span>[<a href="#I-D.bormann-cbor-edn-mapkey" class="cite xref">I-D.bormann-cbor-edn-mapkey</a>]</span> for a work in progress.<a href="#section-1.2-2.5.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-1.2-3">More explorative at this point:<a href="#section-1.2-3" class="pilcrow">¶</a></p>
@@ -1452,7 +1450,11 @@ augmented, not changed, by the process.)<a href="#section-3.1-1" class="pilcrow"
 <p id="section-3.1-2">Annotations could in turn provide input to further validation steps,
 as is often done with Schematron validation in Relax-NG; with an
 appropriate evaluation language this can be used for checking co-occurrence
-constraints (<span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-15#section-5" class="relref">Section 5</a> of [<a href="#I-D.bormann-cbor-cddl-freezer" class="cite xref">I-D.bormann-cbor-cddl-freezer</a>]</span>).<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+constraints (<span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-17#section-5" class="relref">Section 5</a> of [<a href="#I-D.bormann-cbor-cddl-freezer" class="cite xref">I-D.bormann-cbor-cddl-freezer</a>]</span>).<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.1-3">One aspect of validation that is currently not covered by CDDL is the
+checking of specific serialization requirements.
+<span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-serialization-08#section-8" class="relref">Section 8</a> of [<a href="#I-D.ietf-cbor-serialization" class="cite xref">I-D.ietf-cbor-serialization</a>]</span> can be used as a source of inspiration for how
+this could be immediately useful.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="transformation">
@@ -1567,39 +1569,47 @@ available for ABNF as well.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 <dd class="break"></dd>
 <dt id="I-D.bormann-cbor-cddl-csv">[I-D.bormann-cbor-cddl-csv]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">H. Birkholz</span>, <span class="refTitle">"Using CDDL for CSVs"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-cddl-csv-06</span>, <time datetime="2025-03-03" class="refDate">3 March 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-csv-06">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-csv-06</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">H. Birkholz</span>, <span class="refTitle">"Using CDDL for CSVs"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-cddl-csv-09</span>, <time datetime="2026-09-01" class="refDate">1 September 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-csv-09">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-csv-09</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.bormann-cbor-cddl-freezer">[I-D.bormann-cbor-cddl-freezer]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"A feature freezer for the Concise Data Definition Language (CDDL)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-cddl-freezer-15</span>, <time datetime="2025-02-28" class="refDate">28 February 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-15">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-15</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"A feature freezer for the Concise Data Definition Language (CDDL)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-cddl-freezer-17</span>, <time datetime="2026-03-01" class="refDate">1 March 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-17">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-cddl-freezer-17</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.bormann-cbor-draft-numbers">[I-D.bormann-cbor-draft-numbers]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Managing CBOR codepoints in Internet-Drafts"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-draft-numbers-06</span>, <time datetime="2025-07-07" class="refDate">7 July 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-draft-numbers-06">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-draft-numbers-06</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Managing CBOR codepoints in Internet-Drafts"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-draft-numbers-08</span>, <time datetime="2026-06-27" class="refDate">27 June 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-draft-numbers-08">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-draft-numbers-08</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.bormann-cbor-edn-mapkey">[I-D.bormann-cbor-edn-mapkey]</dt>
+        <dd>
+<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">C. Amsüss</span>, <span class="refTitle">"CBOR: Generating Numeric Map Labels from Textual EDN"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-edn-mapkey-01</span>, <time datetime="2026-03-01" class="refDate">1 March 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-edn-mapkey-01">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-edn-mapkey-01</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.bormann-cbor-rfc-cddl-models">[I-D.bormann-cbor-rfc-cddl-models]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CDDL models for some existing RFCs"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-rfc-cddl-models-06</span>, <time datetime="2025-08-29" class="refDate">29 August 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-rfc-cddl-models-06">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-rfc-cddl-models-06</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CDDL models for some existing RFCs"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-bormann-cbor-rfc-cddl-models-07</span>, <time datetime="2026-02-22" class="refDate">22 February 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-rfc-cddl-models-07">https://datatracker.ietf.org/doc/html/draft-bormann-cbor-rfc-cddl-models-07</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-cddl-modules">[I-D.ietf-cbor-cddl-modules]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">B. Moran</span>, <span class="refTitle">"CDDL Module Structure"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-cddl-modules-04</span>, <time datetime="2025-03-03" class="refDate">3 March 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-modules-04">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-modules-04</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">B. Moran</span>, <span class="refTitle">"CDDL Module Structure"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-cddl-modules-06</span>, <time datetime="2026-03-01" class="refDate">1 March 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-modules-06">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cddl-modules-06</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-cde">[I-D.ietf-cbor-cde]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CBOR Common Deterministic Encoding (CDE)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-cde-12</span>, <time datetime="2025-07-07" class="refDate">7 July 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cde-12">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cde-12</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CBOR Common Deterministic Encoding (CDE)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-cde-13</span>, <time datetime="2025-10-13" class="refDate">13 October 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cde-13">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-cde-13</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-edn-e-ref">[I-D.ietf-cbor-edn-e-ref]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"External References to Values in CBOR Diagnostic Notation (EDN)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-e-ref-02</span>, <time datetime="2025-07-02" class="refDate">2 July 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-e-ref-02">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-e-ref-02</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"External References to Values in CBOR Diagnostic Notation (EDN)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-e-ref-03</span>, <time datetime="2026-03-01" class="refDate">1 March 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-e-ref-03">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-e-ref-03</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-edn-literals">[I-D.ietf-cbor-edn-literals]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"CBOR Extended Diagnostic Notation (EDN)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-literals-18</span>, <time datetime="2025-07-07" class="refDate">7 July 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-18">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-18</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span>, <span class="refTitle">"Concise Diagnostic Notation (CDN)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-edn-literals-27</span>, <time datetime="2026-07-20" class="refDate">20 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-27">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-edn-literals-27</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-cbor-packed">[I-D.ietf-cbor-packed]</dt>
         <dd>
-<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">M. Gütschow</span>, <span class="refTitle">"Packed CBOR"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-packed-16</span>, <time datetime="2025-07-07" class="refDate">7 July 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-packed-16">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-packed-16</a>&gt;</span>. </dd>
+<span class="refAuthor">Bormann, C.</span> and <span class="refAuthor">M. Gütschow</span>, <span class="refTitle">"Packed CBOR"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-packed-19</span>, <time datetime="2026-02-02" class="refDate">2 February 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-packed-19">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-packed-19</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.ietf-cbor-serialization">[I-D.ietf-cbor-serialization]</dt>
+        <dd>
+<span class="refAuthor">Lundblade, L.</span>, <span class="refTitle">"CBOR Serialization and Determinism"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-cbor-serialization-08</span>, <time datetime="2026-07-29" class="refDate">29 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-cbor-serialization-08">https://datatracker.ietf.org/doc/html/draft-ietf-cbor-serialization-08</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="PSVI">[PSVI]</dt>
         <dd>
@@ -1708,7 +1718,7 @@ would come from applying the XPath expression<a href="#appendix-A.2.1-5" class="
 </div>
 <p id="appendix-A.2.1-7">to <code>https://www.iana.org/assignments/cose/cose.xml</code>, plus some
 filtering on the records returned that only leaves actual allocations.
-<span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-rfc-cddl-models-06#section-3.1" class="relref">Section 3.1</a> of [<a href="#I-D.bormann-cbor-rfc-cddl-models" class="cite xref">I-D.bormann-cbor-rfc-cddl-models</a>]</span> contains an example of a CDDL module that is
+<span><a href="https://datatracker.ietf.org/doc/html/draft-bormann-cbor-rfc-cddl-models-07#section-3.1" class="relref">Section 3.1</a> of [<a href="#I-D.bormann-cbor-rfc-cddl-models" class="cite xref">I-D.bormann-cbor-rfc-cddl-models</a>]</span> contains an example of a CDDL module that is
 automatically generated from those assignments.
 (The code for this extraction is available in the document source
 repository of <span>[<a href="#I-D.bormann-cbor-rfc-cddl-models" class="cite xref">I-D.bormann-cbor-rfc-cddl-models</a>]</span> as <span>[<a href="#EXTRACT-RB" class="cite xref">EXTRACT-RB</a>]</span>.)<a href="#appendix-A.2.1-7" class="pilcrow">¶</a></p>
